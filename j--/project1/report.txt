@@ -1,0 +1,214 @@
+1. Enter the number of hours it took you to complete the project between
+   the <<< and >>> signs below (eg, <<<10>>>).
+
+   <<<20>>>
+   
+2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
+   between the <<< and >>> signs below (eg, <<<3>>>).
+
+   <<<2>>>
+
+3. Did you receive help from anyone? List their names, status (classmate, 
+   CS451/651 grad, TA, other), and the nature of help received.
+
+   Name               Status       Help Received
+   Swaminathan Iyer   Professor    I received help for setting up the 
+								   environment.
+   Cameo Dorais		  classmate    Small discussion about precedence
+   ...                ...          ...
+
+4. Provide a short description of how you approached each problem, issues you 
+   encountered, and how you resolved those issues.
+
+   Problem 1 (Using CLEmitter)
+      Approach: This problem, as well as the other ones in this project, were
+	  not hard to complete. The fact that we were given an example of how a
+	  CLEmitter program is being written helped a lot. Most of the code, in 
+	  this problem, is similar, if not the same, with the example GenFactorial 
+	  presented on the slides. It was definitely a little bit more challenging
+	  because of the boolean method, the boolean variables, and the for loop,
+	  but, all in all, it was not hard to complete. I started this problem 
+	  almost immediately after the release date, and I was able to complete at
+	  least half of it. I got stuck because I didn't know what most of the code
+	  meant, and I also didn't know how to represent a boolean. In one of the 
+	  lectures, I learned that the boolean is being represented with the Z 
+	  rather than a B. This was a little bit confusing because an Integer is
+	  being represented by I. Once I got this small information, I was able to
+	  complete the initialization of the boolean variable result, as well as, 
+	  the if statement located in the main method. Going to the isPrime method,
+	  which is defined after the main method, the first challenge I encountered
+	  was the representation of the for loop. I picked around to see other Gen 
+	  programs that could have been of help like the GenLookupSwitch or the
+	  GenTableSwitch, but there wasn't any reference to a for loop. I was only
+	  seeing references to while loops. This gave me the idea of treating the 
+	  for loop as a while loop. By this, I mean that I turned the line:
+	  for (int i = 2; i < n/i; i++) {...} to the following: 
+	  int i = 2;
+	  while (i < n/i) {
+		...
+		i++
+	  }
+	  This transformation made things easier because I knew how to treat a 
+	  while loop from the other given examples. Last but not least, because
+	  the method isPrime() returns either true or false, I considered the 
+	  number 1 to be my true and the number 0 to be my false which also made
+	  things much simpler. Of course, I encountered difficulties on the way of
+	  completing this, but I will talk about those below.
+
+      Issues and resolution: One of the issues I encountered in this problem 
+		was the inconsistent stack height. At first, I thought that my issues
+		were caused from using a lot of storing and loading variables that were 
+		unnecessary. I tried to cut down those variables, but I kept getting 
+		this error. This was happening because every time I was getting the 
+		return value of the isPrime method, I was actually not returning that
+		value by using the e.addNoArgInstruction(IRETURN);. Including this in 
+		my code solved the stack height issue. However, even if this issue was,
+		finally, solved, I got another error. The error this time was referring
+		to the register two containing a wrong type. This time, I was sure that
+		I was messing up the variables and values that were getting pushed and
+		popped in/from the stack. I fixed this issue by seeing step by step the
+		push and pop in/from the stack. All problems were solved, and problem 1
+		runs without throwing any errors.
+
+   Problem 2 (Arithmetic Operations)
+      Approach: This problem was actually not very hard to complete. It was
+		important to pay attention on the different files given, because 
+		changes are happening in multiple files. Implementing the operator for
+		the division was fairly easy, since we have been given many 
+		instructions in the slides, under the "Adding New Constructs to j--" 
+		title. The writeup for this assignment did not have as many details as
+		the slides, so I paid more attention to the slides, as mentioned 
+		already above. I started by making changes on the TokenInfo.java file 
+		by adding the operators DIV ("/") and REM ("%"). For the remainder, I
+		initially named it as MOD but I saw a variable name as IREM, and I 
+		decided to change the name to REM to not confuse myself later on. I 
+		changed the lexicalgrammar file by adding DIV ::="/" and REM ::="%".
+		I also changed the grammar file and I added under the 
+		multiplicativeExpression DIV and REM. I added in the semantics file the
+		JDivideOp, and the JRemainderOp. Then, I continued with changes on the
+		Scanner.java for the case where the character is a "/", as the slides
+		are showing us. In the same file, I didn't see anything related to the
+		remainder, thus, I decided to add a new case under the star "*". I 
+		followed the same logic with the star since I did not have any extra
+		information about the remainder that was needed. I continued to the
+		Parser.java file and, under the multiplicativeExpression, I added else 
+		if for the case of the division and the case of the remainder, as noted
+		in the slides. I continued with implementing the analyze and codegen
+		methods under the JDivideOp, as described in the slides, and I did the
+		same for the JRemainderOp. In the end, I only had to test my code for 
+		both the division and the remainder, which were successful. If someone
+		asked me what was the difficult part of this problem I would say the
+		JUnaryPlusOp. I followed the same procedure with the division and the
+		remainder. I made changes in the grammar and the sematics but not the
+		lexicalgrammar because the plus sign is already part of it. I also 
+		didn't need to make changes in the TokenInfo.java, as well as the 
+		Scanner.java file for the same reason with the lecixalgrammar. I made
+		on the JUnaryExpression.java file rather than the 
+		JBinaryExpression.java file by adding the necessary code for the 
+		analyze() and the codegen() methods. For those methods, I copied the 
+		code from the JNegateOp class. I did this because I thought that the
+		unary minus or negate would be very similar to the unary plus. Last but
+		not least, I made changes to the Parser.java file by adding the 
+		JUnaryPlusOp in an else if in the JExpression unaryExpression() method.
+
+      Issues and resolution: I did not have any issues with implementing the
+		division and remainder since the instrutions from the slides where very
+		straight forward, but I encountered some issues with the JUnaryPlusOp.
+		Even though I was following the same instructions with the division and
+		the remainder, I could not find where the JUnaryPlusOp was located. I
+		knew that I had to add code to the analyze() and codegen() methods ,so
+		I kept looking until I saw the JUnaryExpression file. Once I found it, 
+		I made the changes as I described above. Another issue I had was when 
+		I tried to test my code for the JUnaryPlusOp. I was getting the 
+		following error: "Unable to initialize main class UnaryPlus Caused by: 
+		java.lang.VerifyError: (class: UnaryPlus, method: main signature: 
+		([Ljava/lang/String;)V) Unable to pop operand off an empty stack". I 
+		direclty thought that I did something wrong with either the analyze() 
+		or the codegen() methods. I found that my mistake was at the codegen()
+		method were the the output is being involved because the error is 
+		mentioning popping from an empty stack, which would have meant that
+		there is nothing that could be an output. I commented out the extra 
+		line of code because I wanted to see if that would fix my issue and it
+		actually did. The issue was resolved and problem 2 was successful.
+		
+
+   Problem 3 (Bitwise Operations)
+      Approach: Implementing this problem was not very hard. I started to
+	  implement all the bitwise operators from the top to the bottom, as they 
+	  are represented in the writeup, but the complement caused me some issues
+	  that I will discuss in the issues section, below. I continued with the 
+	  inclusive or, the exclusive or, and the bitwise and operators which were
+	  not hard. In fact, the appendix C, in the book, was actually very helpful
+	  in the implementation. I made changes in the text files lexicalgrammar,
+	  grammar, and semantics. Then, I added a few new cases in the scanner
+	  under switch, like I did with the division and the remainder. I added  
+	  token kinds in the TokenInfo file. I added the necessary code in the
+	  JBinaryExpression file, as well as, in the Parser file. In my first 
+	  implementation of this bitwise operators, I thought of inheritance rather
+	  than precedence. For example, in the Parser initially the 
+	  conditionalAndExpression method was using the equalityExpression method.
+	  However, in the appendix C, we can see that the conditionalAndExpression
+	  is using the inclusiveOrExpression, which is using the 
+	  exclusiveOrExpression, which is using the andExpression, which is using
+	  the equalityExpression. This way I thought that since the 
+	  conditionalAndExpression is using directly the equality expression then
+	  I could do the same for the bitwise or, xor, and and. Thus, inside the
+	  conditionalAndExpression, I added else if statements with those bitwise
+	  options. My code was running with no issues at all. However, after a 
+	  conversation with one of my classmates, Cameo Dorais, she mentioned that
+	  she created new methods for those operators just to follow the precedence
+	  because it is necessary for the compiler. I was curious as to if my 
+	  implementation will cause issues in future projects and for this reason
+	  I asked the professor. According to him, it will be better to follow the
+	  precedence the appendix is following and not use potential inheritance
+	  because there may be an issue in the future. As a result, I changed my 
+	  code, and now instead of the else if statements in the 
+	  conditionalAndExpression method I have created new methods which are 
+	  following the book. Last but not least, for the complement, I followed 
+	  the steps presented in the slides. I did changes in the lexicalgrammar,
+	  the grammar, and the semantics. I added a case in the switch in the 
+	  Scanner. I implemented the analyze() and codegen() in the 
+	  JUnaryExpression, and I added an else if statement in the parser under 
+	  the simpleUnaryExpression.
+
+      Issues and resolution: The issue I had with this problem was with the 
+	  complement. At first, I was very confused as to how to use the exclusive
+	  or operator and the -1. Therefore, I didn't have any addNoArgInstruction
+	  to my codegen method which led to a false result. Running java BitwiseNot
+	  60 was printing 111100, but this is wrong. As pointed out in the writeup,
+	  I had to use the exclusive or and -1. I was trying to use as an argument
+	  to the addNoArgInstruction the actual integer number -1 because I didn't
+	  realize that there was an actual constant variable that contained it. 
+	  This did not allow the compilation of the BitwiseNot file. After picking
+	  around the constant variables, I found that the -1 is being represented 
+	  by ICONST_M1. When I used this my issue was solved and my implementation
+	  run with no errors.
+
+   Problem 4 (Shift Operations)
+      Approach: The shift operations were very easy to implement. The idea was
+	  very similar to the division from the slides. I made my changes to the 
+	  lexicalgrammar, the grammar, and the scemantics file. I added the 
+	  necessary token kinds in the TokenInfo file. I added a few options in the
+	  Scanner, and I implemented the analyze() and the codegen() methods in the
+	  JBinaryExpression file. Of course, I also added code in the Parser file.
+	  Similarly with problem 3, I had included the shift operations under the
+	  additiveExpression method with some else if statements because of 
+	  inheritance of the multiplicativeExpression. However, I changed my code
+	  because precedence is more important and my previous implementation could
+	  have possibly caused issues in a future project. The change I made is 
+	  that I created a new method called shiftExpression() which is dealing 
+	  with the shift operations, and I made other necessary changes to the 
+	  relationalExpression method to follow the precedence rules in the book.
+
+      Issues and resolution: I did not encounter any issues in the problem.
+
+5. List any other comments here. Feel free to provide any feedback on how
+   much you learned from doing the assignment, and whether you enjoyed
+   doing it.
+
+   Generally, this project was fairly easy. It was a nice introduction to the
+   compiler j--. Even though I did not receive much help from my classmates or
+   the professor, I had some small conversation with classmates, and I realized
+   that dealing with a compiler needs a lot of patience, needs the programmer 
+   to be obserative, and be capable of keeping track of the changes he makes
+   in the code.

@@ -1,0 +1,17 @@
+1	 : "break" = break
+2	 : "case" = case
+3	 : "catch" = catch
+4	 : "continue" = continue
+5	 : "default" = default
+6	 : "do" = do
+7	 : "double" = double
+8	 : "finally" = finally
+9	 : "for" = for
+10	 : "implements" = implements
+11	 : "interface" = interface
+12	 : "long" = long
+13	 : "switch" = switch
+14	 : "throw" = throw
+15	 : "throws" = throws
+16	 : "try" = try
+16	 : <EOF> = 

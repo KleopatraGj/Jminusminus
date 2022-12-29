@@ -1,0 +1,368 @@
+1. Enter the number of hours it took you to complete the project between
+   the <<< and >>> signs below (eg, <<<10>>>).
+
+   <<< 27 >>>
+   
+2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
+   between the <<< and >>> signs below (eg, <<<3>>>).
+
+   <<< 3 >>>
+
+3. Did you receive help from anyone? List their names, status (classmate, 
+   CS451/651 grad, TA, other), and the nature of help received.
+
+   Name               Status       Help Received
+   Cameo Dorais      classmate  I was getting an error that I couldn't not
+			figure out where it was coming from. I asked
+			Cameo about it and she told me to maybe take
+			a look at the Scanner.java because the error
+			sounds like it's coming from there which was
+			actually true. She also helped me with 
+			another issue I had with the Interface 
+			problem which I am discussing in problem 10
+			below.
+								   	
+   Swami Iyer       Instructor  I had an issue with my switch. At first, 
+			the professor helped me with shortening my
+			my code because it was a little bit 
+			complicated. He helped me take away 
+			unnecessary if statements and he explained
+			to me how I should be handling the switch
+			labels and the switch statement blocks. He
+			also adviced me about an issue I had with 
+			problem 10 on Piazza.
+
+4. Provide a short description of how you approached each problem, issues you 
+   encountered, and how you resolved those issues.
+
+   Problem 1 (Long and Double Basic Types): 
+      Approach: I started by making changes in the Parser.java file. My changes
+	  were mostly related with all the types (basic types, referenced types, 
+	  literals) that could possibly contain INT, LONG, DOUBLE, etc. 
+	  Technically, I added the words LONG and DOUBLE, to places in the Parser,
+	  where I saw INT. Those places were the following:
+	  in the method basicType(), I added options for LONG, and DOUBLE
+	  in the method literal(), I added options for the long and double literals
+	  in the method seeBasicType(), I added options for LONG and DOUBLE
+	  in the method seeReferenceType(), I added options for LONG and DOUBLE
+	  
+	  Those were the only changes I made in the Parser for this problem.
+	  
+      Issues and resolution: Once I finished the changes I made, I compiled and
+	  run the program with the option -p in order to see the produced AST. Even
+	  though an AST was provided, I was getting an error that was saying:
+	  "Literal sought were = found." I didn't know where this error was coming
+	  from. I checked all the possible places I could do changes for the long
+	  and double and I could not figure it out. It took me about 4-5 hours to 
+	  before I asked for help from Cameo Dorais. I told her about the error I 
+	  got, and she told me that there may be a possibility that the error is 
+	  coming from the Scanner.java rather than the Parser. In fact, she was 
+	  right, at the case were we are encountering less equal (LE "<="), I had
+	  forgotten to add a line that looks to the next character. I added that 
+	  line, run my program again and my issue was fixed.
+
+   Problem 2 (Operators): 	
+      Approach: Implementing this problem was fairly easy. All I did was to add
+		a few lines of code in the parser for some of the operators	that were
+		not already there. Most of the changes were very similar to each other.
+		I added the MINUS_ASSIGN operator, the STAR_ASSIGN "*=", the DIV_ASSIGN
+		"/=", the REM_ASSIGN "%=, the ARSHIFT_ASSIGN ">>=", the LRSHIFT_ASSIGN
+		">>>=", the ALSHIFT_ASSIGN "<<=", the BXOR_ASSIGN "^=", the	BOR_ASSIGN
+		"|=", and the BAND_ASSIGN "&=".
+		
+		I added the method that deals with the conditionalOrExpression. This
+		method is build in a very similar way with the conditionalAndExpression
+		which was already part of the parser. I actually copy-pasted the 
+		conditionalAndExpression to the conditionalOrExpression with some small
+		changes. I then changed in the assignmentExpression the call to the 
+		conditionalAndExpression to be the call to the conditionalOrExpression.
+		However, I am expecting that final change to change again in the future
+		when I will add the conditional expression. 
+		
+		Moreover, I added the decrement operator "--" to the unaryExpression.
+		
+		Finally, I needed to add in the postfixExpression the post increment 
+		operator as it is indicated in the Appendix C from the book. 
+		Throughout these changes, I was making I was compiling and running the
+		necessary program. It would throw me error that indicated me where to 
+		make the changes I needed.	
+
+      Issues and resolution: I did not encounter any issues in the 
+		implementation of this problem.
+
+   Problem 3 (Conditional Expression): 
+      Approach: The implementation for the conditionalExpression was not hard.
+	  I added a new method in the Parser for the conditionalExpression(). 
+	  Firstly, I am getting the line number because it is necessary, since it
+	  is one of the arguments for the JConditionalExpression constructor. Then,
+	  I am getting getting a conditionalOrExpression which I am inputing in the
+	  lhs variable. By following the Appendix C from the book, I need to check
+	  if an expression contains the operator question "?". If it does, then I 
+	  am getting the thenPart assignmentExpression. After the 
+	  assignmentExpression, there must be a colon. Thus, I am checking if there
+	  is a colon which I am implementing by using the method mustBe(). Once, I 
+	  have checked for a colon, I get the elsePart of the conditionalExpression
+	  which is a call to itself (conditionalExpression). I am, then, creating a
+	  new JConditionalExpression that takes as arguments the line, the 
+	  condition which is contained in the lhs, the thenPart, and the elsePart.
+	  Lastly, I am returning the new JConditionalExpression. To complete the
+	  implementation of the conditional expression, I had to make changes in 
+	  the assignmentExpression in order to follow the precedence rules, which I
+	  did, after getting some errors.
+	  
+      Issues and resolution: Before I adjusted the assignmentExpression, I run
+	  my code and I got the following errors:
+	  
+	  project3/ConditionalExpression.java:7: error: ? found where ; sought
+	  project3/ConditionalExpression.java:7: error: Literal sought where ? 
+	  found
+	  project3/ConditionalExpression.java:7: error: Invalid statement 
+	  expression; it does not have a side-effect
+		
+	  I didn't know what was wrong when I read the first two errors. However,
+	  by looking at the last error I realized that I had not made changes to 
+	  the assignmentExpression that follow the precedence rules. I fixed my 
+	  issue by adding the conditionalExpression in the place of the 
+	  condiationalOrExpression, which I changed when I was doing the problem
+	  with the operators.
+	  
+   Problem 4 (Do Statement): 
+      Approach: For this problem I only made changes in the method statement()
+	  which is located in the Parser. I tried to follow the syntax recommended
+	  by the Appendix C. In this method, I just included an else if statement
+	  that would look for have(DO), which is followed by statements, a 
+	  necessary WHILE, which is followed by a parExpression, and a necessary 
+	  SEMI. Other than that, I made no more changes to the parser.
+
+      Issues and resolution: I started implementing this problem before I had
+	  fixed my issue for the first problem. Thus, I was getting the same error
+	  with problem 1 "Literal sought were = found". This got resolved by adding
+	  a line of nextCh() in the Scanner.java file which I had previously 
+	  forgotten. 
+
+   Problem 5 (For Statement): 
+      Approach: For the implementation of this problem, the first thing I did
+	  was to add in the method statement() and option that deals with the FOR 
+	  loop. Of course, I have followed the syntax mentioned in the book which
+	  has the following form:
+	  
+	  for ( [forInit] ; [expression] ; [forUpdate] ) statement
+	  
+	  Once I saw the forInit and the forUpdate, I realized that those are 
+	  methods that need to be added as indicated in the Appendix C. Both of
+	  those methods are supposed to return a list of statement expressions of
+	  type Jstatement. This information can be found in the JForStatement file,
+	  where we can see the type of the parameters in the constructor. 
+	  Therefore, I implemented a method of type Jstatement that returns a list 
+	  of statement expressions which I named forInit and it doesn't take any
+	  arguments. For the forInit(), I followed the instructions given in the
+	  writeup, while keeping in mind the syntax in the Appendix C. I am 
+	  creating a list that will contain statement expressions. I am checking if
+	  forInit is not looking at a local variable declarator, and with a 
+	  do-while loop I am adding statmentExpression in the list, which I am
+	  returning. In this case, I am looking at a local variable declarator. I 
+	  am creating a list of type JVariableDeclarator that will contain the 
+	  variable declarator. Then, I am creating a new object of type 
+	  JvariableDeclaration that contains the variable declarator, and I am 
+	  adding it into the list of the statement expressions which I am 
+	  returning. To implement the method forInit(), I had as model the method
+	  variableDeclarators(). In a similar way, I implemented the method 
+	  forUpdate(). As already mentioned, this method is also supposed to 
+	  return a list of statement expressions. Keeping in mind the method
+	  variableDeclarators(), I was able to implement forUpdate() with small
+	  changes in the types of the lists I was creating. After I finished with
+	  this, I went back to the statement() method to continue witht the FOR
+	  option. In the For option, I included a few if statements that will
+	  look for case were we either have an init, an expression, and an update.
+	  I did this because those three variables are enclosed in square
+	  brackets "[]", which means that there may be zero or one of those items.
+	  Lastly, I made one more change in the statementExpression() method. I 
+	  added an instance of JStatement in the list with all the other instances.
+	  
+      Issues and resolution: When I run my program for this problem, I got an 
+	  error that was saying "Invalid statement expression; it does not have a 
+	  side-effect". I actually didn't know where exactly this error was coming
+	  from. To resolve this issue, I was looking at what I had implemented. At
+	  the time, I had implemented the forInit(), the forUpdate(), and the FOR 
+	  in the statement(). I was quite sure that my implementation was correct.
+	  I went through the parser to find the error indicated above, and I found
+	  that this error was coming from the statementExpression(). I thought that
+	  I needed to add some instance in the list of instances. At first, I tried
+	  the JForStatement but it was giving me a red unerline. I randomly thought
+	  to use JStatement. I didn't get any read underline. I tested my code, and
+	  it worked.
+
+   Problem 6 (Break Statement): 
+      Approach: This problem was very easy to implement. The only change I had
+	  to make was in the statement() method. I just added a couple lines of 
+	  code. Every time we encounter a BREAK, it has be followed by a SEMI.
+
+      Issues and resolution: I didn't encounter any issues with the 
+	  implementation of this problem.
+
+   Problem 7 (Continue Statement): 
+      Approach: This problem was very easy to implement. The only change I had
+	  to make was in the statement() method. I just added a couple lines of 
+	  code. Every time we encounter a CONTINUE, it has be followed by a SEMI.
+
+      Issues and resolution: I didn't encounter any issues with the 
+	  implementation of this problem.
+
+   Problem 8 (Switch Statement): 
+      Approach: In order to be able to make switch working, I had to make some
+	  changes in the statement() method, like I have done with most of these 
+	  problems in this project. In the statement() method, at first, I am 
+	  looking to get as my word SWITCH, which is followed by a parenthesized
+	  expression which is of type JExpression, and this is followed by a set of
+	  curly brackets {} in which there are contained 0 or more switch block 
+	  statement groups. To get those 0 or more switch block statement groups, I
+	  am using a while loop in which I am adding those groups in a list until
+	  I am encountering a RCURLY or the EOF. Furthermore, to be able to add 
+	  those groups in the list, I needed to create two methods. One of them 
+	  is called switchBlockStatementGroup and the other one is called 
+	  switchLabel. The switchLabel method is fairly easy. It needs only an if
+	  statement to check for CASE or DEFAULT, and it returns a JExpression.
+	  When there is a CASE, we are getting the expression that follows the CASE
+	  as well as a COLON. If there is a DEFAULT then the expression is null. 
+	  The DEFAULT should be followed by a COLON. For the 
+	  switchBlockStatementGroup, I had more difficulty than I thought, but I 
+	  will discuss about it in the issues, below. For this method, we are 
+	  supposed to get 1 or more switchLabels. I am creating a list that will 
+	  hold all the switch labels, and I am using a do-while because I need one
+	  or more of them. The condition for the do-while is until we see a CASE or
+	  until we see a DEFAULT. Then, I need 0 or more block statements. I am 
+	  also creating a list that will hold the block statements, but this time I
+	  am using a while loop because I need 0 or more of them. The condition for
+	  the while loop are until you don't see a RCURLY, and you don't see a 
+	  CASE, and you don't see a DEFAULT. 
+
+      Issues and resolution: Someone could argue that the implementation of 
+	  the SWITCH is fairly easy. However, I did encounter some difficulties as
+	  I was solving this. I had a lot of trouble realizing what the conditions 
+	  for my while loops, and do-while loops. The answer was right there in the
+	  writeup and I could not see it. At first, I was using as my only 
+	  conditions see(RCURLY) or !see(RCURLY). Of course I was not able to get 
+	  the right AST. I was ending up to infinite loops, or I was getting a lot
+	  errors of "something sought where case found" or "something sought where
+	  default found." I didn't know what was wrong. I tried using CASE or
+	  DEFAULT instead of RCURLY, but I was ending up to the same issues. I went
+	  to get help from the professor because I had spend a lot of hours trying 
+	  to fix my issues. According to him, my code was longer than it was 
+	  supposed to be and he walked me through my issues. He helped me with the
+	  proper conditions that needed to be used, and he showed me to the right
+	  path. Once I fixed my loops, I came to another issue. I was getting an
+	  AST but it was not the same as the one given to us. My AST was missing a
+	  huge piece of the switch statement block. My problem in this case was 
+	  that my method for the switchBlockStatementGroup was returning an 
+	  arraylist of type SwitchStatementGroup. This method is not supposed to 
+	  return an arraylist with items of types SwitchStatementGroup, but it is
+	  supposed to return the SwitchStatementGroup. Therefore, I fixed my final
+	  issue by changing the return type of my method. This fixed everything and
+	  my switch worked perfectly.
+
+   Problem 9 (Exception Handlers): 
+      Approach: 
+	  The implementation of this part was quite challenging since I had to make
+	  a lot of changes in many parts of the Parser. First, I will start with 
+	  the easy changes, which took place in the statement() method. In the 
+	  statement() method, I added a case for the Parser to be able to deal with
+	  THROW. This is simple since THROW is followed by an expression and a 
+	  SEMI. After this, I also added in the statement() method the TRY CATCH 
+	  and FINALLY. In this case, first, I am getting TRY which is followed by a
+	  block. I used JBlock to get that block and I named my variable tryblock
+	  since it is the block after TRY. Then we are looking to see if there is
+	  a CATCH. If there is, we may or may not encounter 0 or more catches. For
+	  each catch I am getting a LPAREN followed by the formal parameters 
+	  followed by a RPAREN followed by a block. Because the JTryStatement takes
+	  as arguments a list of formal parameters and a list of catch blocks I 
+	  have created arraylists for them. Sometimes after the CATCH we may or may
+	  not encounter a FINALLY which is followed by a block. However, in the 
+	  case where there is no CATCH, we must have a FINALLY. I implemented all 
+	  that I mentioned so far with an if statement and a while loop. The final
+	  thing that was left for me to implement was the THROWS in constructor and
+	  method declarations. This implementation happens in the method 
+	  memberDecl, where the constructor and method declarations are located. 
+	  For the constructors, after the initialization of the formal parameters,
+	  there can be 0 or 1 THROWS which is followed by a list of 1 or more 
+	  qualified identifiers followed by a block. I created an arraylist to keep
+	  all the qualified identifiers. I included an if statement that would 
+	  check if there is a THROWS. If there is, then I am filling the list with
+	  the qualified identifiers, and if there is not then I will have an empty
+	  list. I did the same modifications for the method declarations that are
+	  of type VOID and of type non-void. 
+	  
+
+      Issues and resolution: Once I was done with the THROW and TRY, CATCH, 
+	  FINALLY in the statement() method, I decided to run my program to see the
+	  produced AST. However, I run to an error of not find the option for 
+	  throws. I realized that I needed to add this option somewhere. By looking
+	  at the appendix C in the book I saw that THROWS is included in the the 
+	  memberDecl method. I added my code there and I run my program. I came to
+	  another issue. This time I was getting an error of a null pointer 
+	  exception. This was happening because for the arraylist I created for the
+	  qualified identifiers, when there was no THROWS I was adding null to the
+	  list and I was not assigning null. I fixed my issue by using an 
+	  assignment rather than the add() method. This fixed my issue and my 
+	  exception handlers worked perfectly.
+
+   Problem 10 (Interface Type Declaration): 
+      Approach: For the implementation of this problem, there has been a lot of
+	  additions, I have added lines of code in the following methods: 
+	  typeDeclaration(), classDeclaration(), and I have added the following 
+	  methods: interfaceDeclaration(), interfaceBody(), and 
+	  interfaceMemberDecl(). I actually followed the order of the grammar to do
+	  this because of how many changes and additions I had to make. I started 
+	  by adding the option of the interfaceDeclaration in the typeDeclaration()
+	  method. I did this by adding an if statement that would see if there is 
+	  an INTERFACE. I added the option of IMPLEMENTS in the classDeclaration()
+	  method because IMPLEMENTS is being used in the Interface.java file. The
+	  implements, according to the grammar, is followed by one or more 
+	  qualified identifiers. My implementation included an if statement to 
+	  check for the IMPLEMENTS and a do-while loop for the qualified 
+	  identifiers. For the creation of the method interfaceDeclaration things
+	  were fairly easy. This method is very similar the classDeclaration 
+	  method. For most of its part, I kind of copied some lines from one method
+	  to the other. The differences are that in the interfaceDeclaration method
+	  we have to start with the INTERFACE  rather than CLASS. The EXTENDS part
+	  in the interfaceDeclaration() is followed by 1 or more qualifies 
+	  identifiers, thus, I added a do-while loop to get all of them. The 
+	  interfaceDeclaration() does not contain an IMPLEMENTS, thus, I excluded 
+	  it from this method. Lastly, the interfaceDeclaration() requires an 
+	  interfaceBody rather than a classBody. Next in line was the 
+	  interfaceBody() method. This method is exactly the same with the 
+	  classBody(). Their difference is the call to the member methods. The 
+	  interfaceBody() calls the interfaceMemberDecl while the classBody() calls
+	  the memberDecl. Last but not least, I had to only implement the 
+	  interfaceMemberDecl() method. This method was very very similar to the 
+	  memberDecl() method. I copied the parts that deal with the method 
+	  declarations (VOID and non-VOID) and the field from the memberDecl() to
+	  the interfaceMemberDecl() with some small changes. The method 
+	  declarations in the interfaceMemberDecl always end with a SEMI and no 
+	  body. 
+
+      Issues and resolution: For most of its part I did not encounter a lot of
+	  issues with this implementation, in fact there were a couple. The first
+	  issue I encountered was with the IMPLEMENTS. At first, I did not know 
+	  that I had to include it in the classDeclaration() method. I had 
+	  implemented everything else, and I run my code and I got an error that
+	  implements was found. This indicated me into adding this part of the code
+	  to my Parser. My issue was fixed and I run my code again. Compilation and
+	  the production of the AST is happening. However, my AST differed from the
+	  given AST only on one line. The modifiers after the JMethodDeclaration on
+	  line 5 are supposed to contain "public" and "abstract". Me and one of my 
+	  classmates, Cameo Dorais, run into the same issue. I could not figure out
+	  how exaclty to fix this issue, but she did. She adviced me to check if
+	  the modifiers list contains the abstract in the interfaceBody() method.
+	  Thus, I added an if statement that checks if the list with the modifiers
+	  contains ABSTRACT. If it doesn't, I added the string "abstract" in the 
+	  list. This fixed my issue and I was able to produce the correct AST. The
+	  professor confirmed this by answering to one of my posts on Piazza.
+
+5. List any other comments here. Feel free to provide any feedback on how
+   much you learned from doing the assignment, and whether you enjoyed
+   doing it.
+
+   From this assignment, I learned that I need to pay very close attention to
+   my conditions in my if statements, while loop, do-while loops. I also need
+   to be careful with the returning type of certain methods. Other than this,
+   I can say that it was an enjoyable project with some frustrating moments.

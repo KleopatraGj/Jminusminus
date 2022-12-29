@@ -1,0 +1,92 @@
+{
+    "JCompilationUnit:1":
+    {
+        "source": "project3/ConditionalExpression.java",
+        "imports": ["java.lang.System", "java.util.Random"],
+        "JClassDeclaration:4":
+        {
+            "modifiers": ["public"],
+            "name": "ConditionalExpression",
+            "super": "java.lang.Object",
+            "JMethodDeclaration:5":
+            {
+                "modifiers": ["public", "static"],
+                "returnType": "void",
+                "name": "main",
+                "parameters": [["args", "String[]"]],
+                "JBlock:5":
+                {
+                    "JVariableDeclaration:6":
+                    {
+                        "JVariableDeclarator:6":
+                        {
+                            "name": "rng",
+                            "type": "Random",
+                            "Initializer":
+                            {
+                                "JNewOp:6":
+                                {
+                                    "type": "Random"
+                                }
+                            }
+                        }
+                    },
+                    "JVariableDeclaration:7":
+                    {
+                        "JVariableDeclarator:7":
+                        {
+                            "name": "result",
+                            "type": "String",
+                            "Initializer":
+                            {
+                                "JConditionalExpression:7":
+                                {
+                                    "Condition":
+                                    {
+                                        "JMessageExpression:7":
+                                        {
+                                            "ambiguousPart": "rng",
+                                            "name": "nextBoolean"
+                                        }
+                                    },
+                                    "ThenPart":
+                                    {
+                                        "JLiteralString:7":
+                                        {
+                                            "type": "",
+                                            "value": "Heads"
+                                        }
+                                    },
+                                    "ElsePart":
+                                    {
+                                        "JLiteralString:7":
+                                        {
+                                            "type": "",
+                                            "value": "Tails"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "JStatementExpression:8":
+                    {
+                        "JMessageExpression:8":
+                        {
+                            "ambiguousPart": "System.out",
+                            "name": "println",
+                            "Argument":
+                            {
+                                "JVariable:8":
+                                {
+                                    "name": "result",
+                                    "type": "null"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

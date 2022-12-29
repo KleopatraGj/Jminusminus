@@ -1,0 +1,493 @@
+{
+    "JCompilationUnit:1":
+    {
+        "source": "project3/Interface.java",
+        "imports": ["java.lang.Integer", "java.lang.System"],
+        "JInterfaceDeclaration:4":
+        {
+            "modifiers": ["abstract", "interface"],
+            "name": "Factorial",
+            "super": "java.lang.Object",
+            "JMethodDeclaration:5":
+            {
+                "modifiers": ["public", "abstract"],
+                "returnType": "int",
+                "name": "compute",
+                "parameters": [["n", "int"]]
+            }
+        },
+        "JClassDeclaration:8":
+        {
+            "modifiers": [],
+            "name": "FactorialIter",
+            "super": "java.lang.Object",
+            "implements": ["Factorial"],
+            "JMethodDeclaration:9":
+            {
+                "modifiers": ["public"],
+                "returnType": "int",
+                "name": "compute",
+                "parameters": [["n", "int"]],
+                "JBlock:9":
+                {
+                    "JVariableDeclaration:10":
+                    {
+                        "JVariableDeclarator:10":
+                        {
+                            "name": "result",
+                            "type": "int",
+                            "Initializer":
+                            {
+                                "JLiteralInt:10":
+                                {
+                                    "type": "",
+                                    "value": "1"
+                                }
+                            }
+                        }
+                    },
+                    "JForStatement:11":
+                    {
+                        "Init":
+                        {
+                            "JVariableDeclaration:11":
+                            {
+                                "JVariableDeclarator:11":
+                                {
+                                    "name": "i",
+                                    "type": "int",
+                                    "Initializer":
+                                    {
+                                        "JLiteralInt:11":
+                                        {
+                                            "type": "",
+                                            "value": "1"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "Condition":
+                        {
+                            "JBinaryExpression:11":
+                            {
+                                "operator": "<=",
+                                "type": "",
+                                "Operand1":
+                                {
+                                    "JVariable:11":
+                                    {
+                                        "name": "i",
+                                        "type": "null"
+                                    }
+                                },
+                                "Operand2":
+                                {
+                                    "JVariable:11":
+                                    {
+                                        "name": "n",
+                                        "type": "null"
+                                    }
+                                }
+                            }
+                        },
+                        "Update":
+                        {
+                            "JStatementExpression:11":
+                            {
+                                "JUnaryExpression:11":
+                                {
+                                    "operator": "++ (post)",
+                                    "type": "",
+                                    "Operand":
+                                    {
+                                        "JVariable:11":
+                                        {
+                                            "name": "i",
+                                            "type": "null"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "Body":
+                        {
+                            "JBlock:11":
+                            {
+                                "JStatementExpression:12":
+                                {
+                                    "JBinaryExpression:12":
+                                    {
+                                        "operator": "*=",
+                                        "type": "",
+                                        "Operand1":
+                                        {
+                                            "JVariable:12":
+                                            {
+                                                "name": "result",
+                                                "type": "null"
+                                            }
+                                        },
+                                        "Operand2":
+                                        {
+                                            "JVariable:12":
+                                            {
+                                                "name": "i",
+                                                "type": "null"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "JReturnStatement:14":
+                    {
+                        "Expression":
+                        {
+                            "JVariable:14":
+                            {
+                                "name": "result",
+                                "type": "null"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "JClassDeclaration:18":
+        {
+            "modifiers": [],
+            "name": "FactorialRec",
+            "super": "java.lang.Object",
+            "implements": ["Factorial"],
+            "JMethodDeclaration:19":
+            {
+                "modifiers": ["public"],
+                "returnType": "int",
+                "name": "compute",
+                "parameters": [["n", "int"]],
+                "JBlock:19":
+                {
+                    "JReturnStatement:20":
+                    {
+                        "Expression":
+                        {
+                            "JConditionalExpression:20":
+                            {
+                                "Condition":
+                                {
+                                    "JBinaryExpression:20":
+                                    {
+                                        "operator": "==",
+                                        "type": "",
+                                        "Operand1":
+                                        {
+                                            "JVariable:20":
+                                            {
+                                                "name": "n",
+                                                "type": "null"
+                                            }
+                                        },
+                                        "Operand2":
+                                        {
+                                            "JLiteralInt:20":
+                                            {
+                                                "type": "",
+                                                "value": "0"
+                                            }
+                                        }
+                                    }
+                                },
+                                "ThenPart":
+                                {
+                                    "JLiteralInt:20":
+                                    {
+                                        "type": "",
+                                        "value": "1"
+                                    }
+                                },
+                                "ElsePart":
+                                {
+                                    "JBinaryExpression:20":
+                                    {
+                                        "operator": "*",
+                                        "type": "",
+                                        "Operand1":
+                                        {
+                                            "JVariable:20":
+                                            {
+                                                "name": "n",
+                                                "type": "null"
+                                            }
+                                        },
+                                        "Operand2":
+                                        {
+                                            "JMessageExpression:20":
+                                            {
+                                                "ambiguousPart": "null",
+                                                "name": "compute",
+                                                "Argument":
+                                                {
+                                                    "JBinaryExpression:20":
+                                                    {
+                                                        "operator": "-",
+                                                        "type": "",
+                                                        "Operand1":
+                                                        {
+                                                            "JVariable:20":
+                                                            {
+                                                                "name": "n",
+                                                                "type": "null"
+                                                            }
+                                                        },
+                                                        "Operand2":
+                                                        {
+                                                            "JLiteralInt:20":
+                                                            {
+                                                                "type": "",
+                                                                "value": "1"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "JClassDeclaration:24":
+        {
+            "modifiers": ["public"],
+            "name": "Interface",
+            "super": "java.lang.Object",
+            "JMethodDeclaration:25":
+            {
+                "modifiers": ["public", "static"],
+                "returnType": "void",
+                "name": "main",
+                "parameters": [["args", "String[]"]],
+                "JBlock:25":
+                {
+                    "JVariableDeclaration:26":
+                    {
+                        "JVariableDeclarator:26":
+                        {
+                            "name": "n",
+                            "type": "int",
+                            "Initializer":
+                            {
+                                "JMessageExpression:26":
+                                {
+                                    "ambiguousPart": "Integer",
+                                    "name": "parseInt",
+                                    "Argument":
+                                    {
+                                        "JArrayExpression:26":
+                                        {
+                                            "TheArray":
+                                            {
+                                                "JVariable:26":
+                                                {
+                                                    "name": "args",
+                                                    "type": "null"
+                                                }
+                                            },
+                                            "TheIndex":
+                                            {
+                                                "JLiteralInt:26":
+                                                {
+                                                    "type": "",
+                                                    "value": "0"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "JVariableDeclaration:27":
+                    {
+                        "JVariableDeclarator:27":
+                        {
+                            "name": "fIter",
+                            "type": "FactorialIter",
+                            "Initializer":
+                            {
+                                "JNewOp:27":
+                                {
+                                    "type": "FactorialIter"
+                                }
+                            }
+                        }
+                    },
+                    "JStatementExpression:28":
+                    {
+                        "JMessageExpression:28":
+                        {
+                            "ambiguousPart": "System.out",
+                            "name": "println",
+                            "Argument":
+                            {
+                                "JBinaryExpression:28":
+                                {
+                                    "operator": "+",
+                                    "type": "",
+                                    "Operand1":
+                                    {
+                                        "JBinaryExpression:28":
+                                        {
+                                            "operator": "+",
+                                            "type": "",
+                                            "Operand1":
+                                            {
+                                                "JBinaryExpression:28":
+                                                {
+                                                    "operator": "+",
+                                                    "type": "",
+                                                    "Operand1":
+                                                    {
+                                                        "JLiteralString:28":
+                                                        {
+                                                            "type": "",
+                                                            "value": "fIter("
+                                                        }
+                                                    },
+                                                    "Operand2":
+                                                    {
+                                                        "JVariable:28":
+                                                        {
+                                                            "name": "n",
+                                                            "type": "null"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "Operand2":
+                                            {
+                                                "JLiteralString:28":
+                                                {
+                                                    "type": "",
+                                                    "value": ") = "
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "Operand2":
+                                    {
+                                        "JMessageExpression:28":
+                                        {
+                                            "ambiguousPart": "fIter",
+                                            "name": "compute",
+                                            "Argument":
+                                            {
+                                                "JVariable:28":
+                                                {
+                                                    "name": "n",
+                                                    "type": "null"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "JVariableDeclaration:29":
+                    {
+                        "JVariableDeclarator:29":
+                        {
+                            "name": "fRec",
+                            "type": "FactorialRec",
+                            "Initializer":
+                            {
+                                "JNewOp:29":
+                                {
+                                    "type": "FactorialRec"
+                                }
+                            }
+                        }
+                    },
+                    "JStatementExpression:30":
+                    {
+                        "JMessageExpression:30":
+                        {
+                            "ambiguousPart": "System.out",
+                            "name": "println",
+                            "Argument":
+                            {
+                                "JBinaryExpression:30":
+                                {
+                                    "operator": "+",
+                                    "type": "",
+                                    "Operand1":
+                                    {
+                                        "JBinaryExpression:30":
+                                        {
+                                            "operator": "+",
+                                            "type": "",
+                                            "Operand1":
+                                            {
+                                                "JBinaryExpression:30":
+                                                {
+                                                    "operator": "+",
+                                                    "type": "",
+                                                    "Operand1":
+                                                    {
+                                                        "JLiteralString:30":
+                                                        {
+                                                            "type": "",
+                                                            "value": "fRec("
+                                                        }
+                                                    },
+                                                    "Operand2":
+                                                    {
+                                                        "JVariable:30":
+                                                        {
+                                                            "name": "n",
+                                                            "type": "null"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "Operand2":
+                                            {
+                                                "JLiteralString:30":
+                                                {
+                                                    "type": "",
+                                                    "value": ")  = "
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "Operand2":
+                                    {
+                                        "JMessageExpression:30":
+                                        {
+                                            "ambiguousPart": "fRec",
+                                            "name": "compute",
+                                            "Argument":
+                                            {
+                                                "JVariable:30":
+                                                {
+                                                    "name": "n",
+                                                    "type": "null"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

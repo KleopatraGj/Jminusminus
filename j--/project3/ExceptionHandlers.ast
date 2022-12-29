@@ -1,0 +1,282 @@
+{
+    "JCompilationUnit:1":
+    {
+        "source": "project3/ExceptionHandlers.java",
+        "imports": ["java.lang.ArrayIndexOutOfBoundsException", "java.lang.Double", "java.lang.Exception", "java.lang.IllegalArgumentException", "java.lang.Math", "java.lang.NumberFormatException", "java.lang.System"],
+        "JClassDeclaration:9":
+        {
+            "modifiers": ["public"],
+            "name": "ExceptionHandlers",
+            "super": "java.lang.Object",
+            "JMethodDeclaration:10":
+            {
+                "modifiers": ["public", "static"],
+                "returnType": "void",
+                "name": "main",
+                "parameters": [["args", "String[]"]],
+                "JBlock:10":
+                {
+                    "JTryStatement:11":
+                    {
+                        "TryBlock":
+                        {
+                            "JBlock:11":
+                            {
+                                "JVariableDeclaration:12":
+                                {
+                                    "JVariableDeclarator:12":
+                                    {
+                                        "name": "x",
+                                        "type": "double",
+                                        "Initializer":
+                                        {
+                                            "JMessageExpression:12":
+                                            {
+                                                "ambiguousPart": "Double",
+                                                "name": "parseDouble",
+                                                "Argument":
+                                                {
+                                                    "JArrayExpression:12":
+                                                    {
+                                                        "TheArray":
+                                                        {
+                                                            "JVariable:12":
+                                                            {
+                                                                "name": "args",
+                                                                "type": "null"
+                                                            }
+                                                        },
+                                                        "TheIndex":
+                                                        {
+                                                            "JLiteralInt:12":
+                                                            {
+                                                                "type": "",
+                                                                "value": "0"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "JVariableDeclaration:13":
+                                {
+                                    "JVariableDeclarator:13":
+                                    {
+                                        "name": "result",
+                                        "type": "double",
+                                        "Initializer":
+                                        {
+                                            "JMessageExpression:13":
+                                            {
+                                                "ambiguousPart": "null",
+                                                "name": "sqrt",
+                                                "Argument":
+                                                {
+                                                    "JVariable:13":
+                                                    {
+                                                        "name": "x",
+                                                        "type": "null"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "JStatementExpression:14":
+                                {
+                                    "JMessageExpression:14":
+                                    {
+                                        "ambiguousPart": "System.out",
+                                        "name": "println",
+                                        "Argument":
+                                        {
+                                            "JVariable:14":
+                                            {
+                                                "name": "result",
+                                                "type": "null"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "CatchBlock":
+                        {
+                            "parameter": ["e", "ArrayIndexOutOfBoundsException"],
+                            "JBlock:15":
+                            {
+                                "JStatementExpression:16":
+                                {
+                                    "JMessageExpression:16":
+                                    {
+                                        "ambiguousPart": "System.out",
+                                        "name": "println",
+                                        "Argument":
+                                        {
+                                            "JLiteralString:16":
+                                            {
+                                                "type": "",
+                                                "value": "x not specified"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "CatchBlock":
+                        {
+                            "parameter": ["e", "NumberFormatException"],
+                            "JBlock:17":
+                            {
+                                "JStatementExpression:18":
+                                {
+                                    "JMessageExpression:18":
+                                    {
+                                        "ambiguousPart": "System.out",
+                                        "name": "println",
+                                        "Argument":
+                                        {
+                                            "JLiteralString:18":
+                                            {
+                                                "type": "",
+                                                "value": "x must be a double"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "CatchBlock":
+                        {
+                            "parameter": ["e", "IllegalArgumentException"],
+                            "JBlock:19":
+                            {
+                                "JStatementExpression:20":
+                                {
+                                    "JMessageExpression:20":
+                                    {
+                                        "ambiguousPart": "System.out",
+                                        "name": "println",
+                                        "Argument":
+                                        {
+                                            "JMessageExpression:20":
+                                            {
+                                                "ambiguousPart": "e",
+                                                "name": "getMessage"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "FinallyBlock":
+                        {
+                            "JBlock:21":
+                            {
+                                "JStatementExpression:22":
+                                {
+                                    "JMessageExpression:22":
+                                    {
+                                        "ambiguousPart": "System.out",
+                                        "name": "println",
+                                        "Argument":
+                                        {
+                                            "JLiteralString:22":
+                                            {
+                                                "type": "",
+                                                "value": "Done!"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "JMethodDeclaration:26":
+            {
+                "modifiers": ["private", "static"],
+                "returnType": "double",
+                "name": "sqrt",
+                "parameters": [["x", "double"]],
+                "throws": ["IllegalArgumentException"],
+                "JBlock:26":
+                {
+                    "JIfStatement:27":
+                    {
+                        "Condition":
+                        {
+                            "JBinaryExpression:27":
+                            {
+                                "operator": "<",
+                                "type": "",
+                                "Operand1":
+                                {
+                                    "JVariable:27":
+                                    {
+                                        "name": "x",
+                                        "type": "null"
+                                    }
+                                },
+                                "Operand2":
+                                {
+                                    "JLiteralDouble:27":
+                                    {
+                                        "type": "",
+                                        "value": "0.0"
+                                    }
+                                }
+                            }
+                        },
+                        "ThenPart":
+                        {
+                            "JBlock:27":
+                            {
+                                "JThrowStatement:28":
+                                {
+                                    "Expression":
+                                    {
+                                        "JNewOp:28":
+                                        {
+                                            "type": "IllegalArgumentException",
+                                            "Argument":
+                                            {
+                                                "JLiteralString:28":
+                                                {
+                                                    "type": "",
+                                                    "value": "x must be positve"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "JReturnStatement:30":
+                    {
+                        "Expression":
+                        {
+                            "JMessageExpression:30":
+                            {
+                                "ambiguousPart": "Math",
+                                "name": "sqrt",
+                                "Argument":
+                                {
+                                    "JVariable:30":
+                                    {
+                                        "name": "x",
+                                        "type": "null"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,6 @@
+1	 : <INT_LITERAL> = 0
+2	 : <INT_LITERAL> = 9
+3	 : <INT_LITERAL> = 20
+4	 : <INT_LITERAL> = 29
+5	 : <INT_LITERAL> = 1234567890
+5	 : <EOF> = 

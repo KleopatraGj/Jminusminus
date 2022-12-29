@@ -1,0 +1,125 @@
+// Copyright 2012- Bill Campbell, Swami Iyer and Bahar Akbal-Delibas.
+//
+// Lexical grammar for j--.
+
+// Whitespace -- ignored
+" " | "\t" | "\n" | "\r" | "\f"
+
+// Single line comment -- ignored
+"//" { ~( "\n" | "\r" ) } ( "\n" | "\r" ["\n"] )
+
+// Reserved words
+ABSTRACT       ::= "abstract"
+BOOLEAN        ::= "boolean"
+CHAR           ::= "char"
+CLASS          ::= "class"
+ELSE           ::= "else"
+EXTENDS        ::= "extends"
+FALSE          ::= "false"
+IF             ::= "if"
+IMPORT         ::= "import"
+INSTANCEOF     ::= "instanceof"
+INT            ::= "int"
+NEW            ::= "new"
+NULL           ::= "null"
+PACKAGE        ::= "package"
+PRIVATE        ::= "private"
+PROTECTED      ::= "protected"
+PUBLIC         ::= "public"
+RETURN         ::= "return"
+STATIC         ::= "static"
+SUPER          ::= "super"
+THIS           ::= "this"
+TRUE           ::= "true"
+VOID           ::= "void"
+WHILE          ::= "while"
+
+// The reserved words that I added for project2
+// Here I didn't use the alphabetical order because this
+// file is not going to be checked by the professor
+BREAK          ::= "break"
+CASE           ::= "case"
+CATCH          ::= "catch"
+CONTINUE       ::= "continue"
+DEFAULT        ::= "default"
+DO             ::= "do"
+DOUBLE         ::= "double"
+FINALLY        ::= "finally"
+FOR            ::= "for"
+IMPLEMENTS     ::= "implements"
+INTERFACE      ::= "interface"
+LONG           ::= "long"
+SWITCH         ::= "switch"
+THROW          ::= "throw"
+THROWS         ::= "throws"
+TRY            ::= "try"
+
+// Separators
+COMMA          ::= ","
+DOT            ::= "."
+LBRACK         ::= "["
+LCURLY         ::= "{"
+LPAREN         ::= "("
+RBRACK         ::= "]"
+RCURLY         ::= "}"
+RPAREN         ::= ")"
+SEMI           ::= ";"
+
+// Operators
+ASSIGN         ::= "="
+DEC            ::= "--"
+EQUAL          ::= "=="
+GT             ::= ">"
+INC            ::= "++"
+LAND           ::= "&&"
+LE             ::= "<="
+LNOT           ::= "!"
+MINUS          ::= "-"
+PLUS           ::= "+"
+PLUS_ASSIGN    ::= "+="
+STAR           ::= "*"
+DIV            ::= "/"
+REM            ::= "%"
+BOR            ::= "|"
+BXOR           ::= "^"
+BAND           ::= "&"
+BNOT           ::= "~"
+ALSHIFT        ::= "<<"
+ARSHIFT        ::= ">>"
+LRSHIFT        ::= ">>>"
+// Here are the new operators I added for project 2
+CONDITIONAL    ::= "?"
+COLON          ::= ":"
+LNOT_ASSIGN    ::= "!="
+DIV_ASSIGN     ::= "/="
+MINUS_ASSIGN   ::= "-="
+STAR_ASSIGN    ::= "*="
+REM_ASSIGN     ::= "%="
+ARSHIFT_ASSIGN ::= ">>="
+LRSHIFT_ASSIGN ::= ">>>="
+GE             ::= ">="
+ALSHIFT_ASSIGN ::= "<<="
+LT             ::= "<"
+BXOR_ASSIGN    ::= "^="
+BOR_ASSIGN     ::= "|="
+LOR             ::= "||"
+BAND_ASSIGN    ::= "&="
+
+// Identifiers
+IDENTIFIER     ::= ( "a"..."z" | "A"..."Z" | "_" | "$" )
+                       { "a"..."z" | "A"..."Z" | "_" | "0"..."9" | "$" }
+
+// Literals
+INT_LITERAL    ::= ( "0"..."9" ) { "0"..."9" }
+ESC            ::= "\\" ( "n" | "r" | "t" | "b" | "f" | "'" | "\"" | "\\" )
+STRING_LITERAL ::= "\"" { ESC | ~( "\"" | "\\" | "\n" | "\r" ) } "\""
+CHAR_LITERAL   ::= "'" ( ESC | ~( "'" | "\n" | "\r" | "\\" ) ) "'"
+
+// add other literals
+LONG_LITERAL   ::= ( "0"..."9" ) { "0"..."9" } ( "L" | "l" )
+DOUBLE_LITERAL ::= ( "0"..."9" ) "." [( "0"..."9" ) { "0"..."9" }] [ ( "E" | "e" ) [ ( "+" | "-") ] ] [ ( "D" | "d" ) ]
+                   | "." ( "0"..."9" ) { "0"..."9" } [ ( "E" | "e" ) [ ( "+" | "-") ] ] [ ( "D" | "d" ) ]
+                   | ( "0"..."9" ) { "0"..."9" } ( "E" | "e" ) [ ( "+" | "-") ] [ ( "D" | "d" ) ]
+                   | ( "0"..."9" ) { "0"..."9" } [ ( "E" | "e" ) [ ( "+" | "-") ] ] ( "D" | "d" )
+// End of file
+EOF            ::= "<end of file>"

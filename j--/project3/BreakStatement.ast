@@ -1,0 +1,384 @@
+{
+    "JCompilationUnit:1":
+    {
+        "source": "project3/BreakStatement.java",
+        "imports": ["java.lang.Integer", "java.lang.System"],
+        "JClassDeclaration:4":
+        {
+            "modifiers": ["public"],
+            "name": "BreakStatement",
+            "super": "java.lang.Object",
+            "JMethodDeclaration:5":
+            {
+                "modifiers": ["public", "static"],
+                "returnType": "void",
+                "name": "main",
+                "parameters": [["args", "String[]"]],
+                "JBlock:5":
+                {
+                    "JVariableDeclaration:6":
+                    {
+                        "JVariableDeclarator:6":
+                        {
+                            "name": "n",
+                            "type": "int",
+                            "Initializer":
+                            {
+                                "JMessageExpression:6":
+                                {
+                                    "ambiguousPart": "Integer",
+                                    "name": "parseInt",
+                                    "Argument":
+                                    {
+                                        "JArrayExpression:6":
+                                        {
+                                            "TheArray":
+                                            {
+                                                "JVariable:6":
+                                                {
+                                                    "name": "args",
+                                                    "type": "null"
+                                                }
+                                            },
+                                            "TheIndex":
+                                            {
+                                                "JLiteralInt:6":
+                                                {
+                                                    "type": "",
+                                                    "value": "0"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "JVariableDeclaration:7":
+                    {
+                        "JVariableDeclarator:7":
+                        {
+                            "name": "count",
+                            "type": "int",
+                            "Initializer":
+                            {
+                                "JLiteralInt:7":
+                                {
+                                    "type": "",
+                                    "value": "0"
+                                }
+                            }
+                        }
+                    },
+                    "JForStatement:8":
+                    {
+                        "Init":
+                        {
+                            "JVariableDeclaration:8":
+                            {
+                                "JVariableDeclarator:8":
+                                {
+                                    "name": "i",
+                                    "type": "int",
+                                    "Initializer":
+                                    {
+                                        "JLiteralInt:8":
+                                        {
+                                            "type": "",
+                                            "value": "2"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "Body":
+                        {
+                            "JBlock:8":
+                            {
+                                "JIfStatement:9":
+                                {
+                                    "Condition":
+                                    {
+                                        "JBinaryExpression:9":
+                                        {
+                                            "operator": ">",
+                                            "type": "",
+                                            "Operand1":
+                                            {
+                                                "JVariable:9":
+                                                {
+                                                    "name": "i",
+                                                    "type": "null"
+                                                }
+                                            },
+                                            "Operand2":
+                                            {
+                                                "JVariable:9":
+                                                {
+                                                    "name": "n",
+                                                    "type": "null"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "ThenPart":
+                                    {
+                                        "JBlock:9":
+                                        {
+                                            "JBreakStatement:10":
+                                            {
+                                            }
+                                        }
+                                    }
+                                },
+                                "JVariableDeclaration:12":
+                                {
+                                    "JVariableDeclarator:12":
+                                    {
+                                        "name": "j",
+                                        "type": "int",
+                                        "Initializer":
+                                        {
+                                            "JLiteralInt:12":
+                                            {
+                                                "type": "",
+                                                "value": "2"
+                                            }
+                                        }
+                                    }
+                                },
+                                "JWhileStatement:13":
+                                {
+                                    "Condition":
+                                    {
+                                        "JBinaryExpression:13":
+                                        {
+                                            "operator": "<=",
+                                            "type": "",
+                                            "Operand1":
+                                            {
+                                                "JVariable:13":
+                                                {
+                                                    "name": "j",
+                                                    "type": "null"
+                                                }
+                                            },
+                                            "Operand2":
+                                            {
+                                                "JBinaryExpression:13":
+                                                {
+                                                    "operator": "/",
+                                                    "type": "",
+                                                    "Operand1":
+                                                    {
+                                                        "JVariable:13":
+                                                        {
+                                                            "name": "i",
+                                                            "type": "null"
+                                                        }
+                                                    },
+                                                    "Operand2":
+                                                    {
+                                                        "JVariable:13":
+                                                        {
+                                                            "name": "j",
+                                                            "type": "null"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "Body":
+                                    {
+                                        "JBlock:13":
+                                        {
+                                            "JIfStatement:14":
+                                            {
+                                                "Condition":
+                                                {
+                                                    "JBinaryExpression:14":
+                                                    {
+                                                        "operator": "==",
+                                                        "type": "",
+                                                        "Operand1":
+                                                        {
+                                                            "JBinaryExpression:14":
+                                                            {
+                                                                "operator": "%",
+                                                                "type": "",
+                                                                "Operand1":
+                                                                {
+                                                                    "JVariable:14":
+                                                                    {
+                                                                        "name": "i",
+                                                                        "type": "null"
+                                                                    }
+                                                                },
+                                                                "Operand2":
+                                                                {
+                                                                    "JVariable:14":
+                                                                    {
+                                                                        "name": "j",
+                                                                        "type": "null"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "Operand2":
+                                                        {
+                                                            "JLiteralInt:14":
+                                                            {
+                                                                "type": "",
+                                                                "value": "0"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "ThenPart":
+                                                {
+                                                    "JBlock:14":
+                                                    {
+                                                        "JBreakStatement:15":
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "JStatementExpression:17":
+                                            {
+                                                "JUnaryExpression:17":
+                                                {
+                                                    "operator": "++ (post)",
+                                                    "type": "",
+                                                    "Operand":
+                                                    {
+                                                        "JVariable:17":
+                                                        {
+                                                            "name": "j",
+                                                            "type": "null"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "JStatementExpression:19":
+                                {
+                                    "JBinaryExpression:19":
+                                    {
+                                        "operator": "+=",
+                                        "type": "",
+                                        "Operand1":
+                                        {
+                                            "JVariable:19":
+                                            {
+                                                "name": "count",
+                                                "type": "null"
+                                            }
+                                        },
+                                        "Operand2":
+                                        {
+                                            "JConditionalExpression:19":
+                                            {
+                                                "Condition":
+                                                {
+                                                    "JBinaryExpression:19":
+                                                    {
+                                                        "operator": ">",
+                                                        "type": "",
+                                                        "Operand1":
+                                                        {
+                                                            "JVariable:19":
+                                                            {
+                                                                "name": "j",
+                                                                "type": "null"
+                                                            }
+                                                        },
+                                                        "Operand2":
+                                                        {
+                                                            "JBinaryExpression:19":
+                                                            {
+                                                                "operator": "/",
+                                                                "type": "",
+                                                                "Operand1":
+                                                                {
+                                                                    "JVariable:19":
+                                                                    {
+                                                                        "name": "i",
+                                                                        "type": "null"
+                                                                    }
+                                                                },
+                                                                "Operand2":
+                                                                {
+                                                                    "JVariable:19":
+                                                                    {
+                                                                        "name": "j",
+                                                                        "type": "null"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "ThenPart":
+                                                {
+                                                    "JLiteralInt:19":
+                                                    {
+                                                        "type": "",
+                                                        "value": "1"
+                                                    }
+                                                },
+                                                "ElsePart":
+                                                {
+                                                    "JLiteralInt:19":
+                                                    {
+                                                        "type": "",
+                                                        "value": "0"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "JStatementExpression:20":
+                                {
+                                    "JUnaryExpression:20":
+                                    {
+                                        "operator": "++ (post)",
+                                        "type": "",
+                                        "Operand":
+                                        {
+                                            "JVariable:20":
+                                            {
+                                                "name": "i",
+                                                "type": "null"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "JStatementExpression:22":
+                    {
+                        "JMessageExpression:22":
+                        {
+                            "ambiguousPart": "System.out",
+                            "name": "println",
+                            "Argument":
+                            {
+                                "JVariable:22":
+                                {
+                                    "name": "count",
+                                    "type": "null"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

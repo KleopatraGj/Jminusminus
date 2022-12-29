@@ -1,0 +1,414 @@
+1. Enter the number of hours it took you to complete the project between
+   the <<< and >>> signs below (eg, <<<10>>>).
+
+   <<< 30 >>>
+   
+2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
+   between the <<< and >>> signs below (eg, <<<3>>>).
+
+   <<< 1.5 >>>
+
+3. Did you receive help from anyone? List their names, status (classmate, 
+   CS451/651 grad, TA, other), and the nature of help received.
+
+   Name               Status       Help Received
+   Swami               Iyer        The professor helped me with figuring out an
+                                   issue with the basic types problem. I was 
+				   getting an error that would not allow 
+				   reading the imports because it was from the
+				   .java file. He recommended to switch my 
+				   syntax to the one recommended in the writeup
+				   rather than the one in the book. After I 
+				   fixed that part imports were being parsed 
+				   but I got another issue that would not 
+				   accept the types of the formal parameters.
+				   That was caused because I had forgotten an
+				   "|" in one of the changes I had made in the
+				   parser. The professor also helped me with 
+				   the exception handlers problem, and the 
+				   interface problem. I am disccusing more 
+				   about these in the problems below.
+
+   ...                ...          ...
+
+4. Provide a short description of how you approached each problem, issues you 
+   encountered, and how you resolved those issues.
+
+   Part I (Additions to JavaCC Scanner)
+
+   Problem 1 (Multiline Comment)
+      Approach: For most of this homework it seems that I will make changes to
+	  the j--.jj file. I started this problem by having as my model the single
+	  line comment. In fact, they are the same, the only difference between 
+	  the two is that the multiline comment starts with a "/*" and end with a
+	  "*/", while the single line comment has more information about its 
+	  ending. I also needed to change the names BEGIN_COMMENT, END_COMMENT, and
+	  COMMENT to other names. Other than these changes, I did not have to do 
+	  anything else. 
+
+      Issues and resolution: Now that we have to deal with the j--.jj, things
+	  are a little bit different than before. This problem was not necessarily
+	  hard, but it definitely caused some compiling issues. I didn't know that
+	  I was supposed to change the names of BEGIN_COMMENT, END_COMMENT, and
+	  COMMENT, thus, when I was compiling the build was failing. From the 
+	  indicating errors I realized that I needed to change the names to 
+	  different ones. Once I changed them, my program compiled and run with no
+	  further issues.
+
+   Problem 2 (Operators)
+      Approach: For this problem, in the j--.jj file, I went to the section of
+	  the scanner that contains all the operators and I added those that were
+	  missing in the order that is being shown in the appendix C of the book.
+	  I have added comments in the code as needed. This wasn't hard at all.
+
+      Issues and resolution: I didn't encounter any issues with this problem.
+
+   Problem 3 (Reserved Words)
+      Approach: For this problem, in the j--.jj file, I went to the section if
+	  the scanner that contains all the reserved words and I added those that
+	  were missing in the order that is being shown in the appendix C of the 
+	  book, which is alphabetical. I have added comments in the code as needed.
+
+      Issues and resolution: For this problem, I encountered only one small 
+	  issue. At first I had for the reserved word default: 
+	  <DEFAULT: "default">, but this ended up to being an error throughout the
+	  compilation phase. I had to change the name of this to 
+	  <DEFAULT1: "default">. This fixed my compilation error. My program was
+	  able to compile with no issues and it also run with no issues.
+
+   Problem 4 (Literals)
+      Approach: This problem was actually more challenging than the previous 
+	  ones because of the double literal. For the long literal, I actually had
+	  as my guide the grammar file that is given to us in the writeup. At the
+	  section Literals of the j--.jj file I add the LONG_LITERAL by using the
+	  INT_LITERAL while adding the choices for "l" or "L" after the series of
+	  numbers. For the DOUBLE_LITERAL, the implementation was a little bit more
+	  challenging. Again, at the same section with the other literals, I added
+	  the double one. I used a trial and error method. I was printing a .tokens
+	  file and I was comparing it with the one given to us. As I was adding 
+	  digits, dot, exponents, plus, minus, more digits, and "d" or "D", I 
+	  realized that for the double literals there can be any kind of 
+	  combination of 0 or more, or 0 or 1 of digits, dot, exponents, plus,
+	  minus, more digits, and "d" or "D". At first, I decided to use kleene
+	  closure for each one of those traits. By doing this, I ended up having 
+	  the right result in the .tokens file, but that was not the right result
+	  because I found issues on the next problem that deals with the basic 
+	  types. I changed my syntax to the one given from the grammar in the
+	  writeup that gives 3-4 options for the doubles. My only issue for that
+	  implementation is that I did not know how to represent 0 or 1 in regular
+	  expressions. After some research, I found that 0 or 1 is represented by
+	  the "?" after the expression I am trying to get. That is exaclty what I 
+	  used and now my code for the tokens and the basic types works perfectly.
+
+      Issues and resolution: I didn't necessarily find any kind of issues that
+	  gave me a very hard time for this problem. However, I suppose that 
+	  writing some code and testing over and over again until I get the final
+	  result may be considered an issue. As I mentioned earlier, I tried a 
+	  trial and error method. I started by asking for digits followed by "d" or
+	  "D". I compiled and run my program and I compared the produced .tokens 
+	  file with the one given to us. I saw that there are more combinations
+	  needed for the double literal. I kept creating new combinations and 
+	  adding ORs, until I realized that I could just combine all of them in one
+	  line by including every element (digits, exponent, dot, etc.) in a kleene
+	  closure. This worked out and my .tokens file matched the professor's 
+	  .tokens file. Even though this implementation work just fine for this 
+	  problem. I found issues in the implementation of the basic types AST.
+	  When I was parsing the basic types java file, the parser was getting 
+	  confused and could not parse the imports in the file. I went to the 
+	  professor for help, and he recommended me to use the grammar given in the
+	  writeup, and that is what I did. Following that particular grammar and 
+	  with some research about regular expressions, I found that the kleene 
+	  closure "()*" is used for 0 or more elements, "?" is used for 0 or 1, and
+	  parenthesis are used for grouping. Writing the right grammar fixed the 
+	  issue with this problem, as well as, the issue with the basic types 
+	  problem.
+	  
+
+   Part II (Additions to JavaCC Parser)
+
+   Problem 5 (Long and Double Basic Types)
+      Approach: For this problem I did not make very big changes on the code.
+	  I just added the options for LONG and DOUBLE in the functions 
+	  basicType() in a similar way with how the INT is being implemented. I 
+	  also added the LONG_LITERAL and DOUBLE_LITERAL with a few lines of code
+	  in the literal() function. This was also implmented in a very similar way
+	  with the INT_LITERAL. 
+
+      Issues and resolution: I encountered a few issues for this problem. As I
+	  have already mentioned above, when I parsed my program for this problem
+	  to get the AST, the parser was not able to parse the imports. The first
+	  import in the program is java.lang.Double. My parser was reading the ".D"
+	  part of the import as a DOUBLE_LITERAL rather than how it is supposed to
+	  be read. That issue came from the implementation of the DOUBLE_LITERAL in
+	  the lexical grammar. I fixed the lexical grammar as indicated from the 
+	  grammar in the writeup, but I encountered a new issue. Now, my parsing 
+	  was getting stuck in the type of the variables. The professor
+	  helped me find that issue, which ended up being a missing "|" in the 
+	  literal() function. Now my program is fixed and it runs as it is supposed
+	  to run.
+
+   Problem 6 (Operators)
+      Approach: This problem was not hard to implement at all. Generally, most
+	  of the problems in this project were not necessarily hard because we 
+	  implemented them in the previous projects. The only difference is that 
+	  this project is focusing on regular expressions. Anyway, for this problem
+	  I closely followed the grammar attached in the writeup. I kept the 
+	  precedence of the operators how they are supposed to, which means that I
+	  created methods in certain places of the parser and I added operators in
+	  methods that I needed to. The methods that I added because they were not
+	  part of the parser before are: the conditionalOrExpression(), which is 
+	  implemented like the conditionalAndExpression(), the 
+	  inclusiveOrExpression(), which is also implemented similarly with the 
+	  methods mentioned above, the exclusiveOrExpression(), the 
+	  andExpression(), and the shiftExpression(). All of these methods have
+	  been implemented in a very similar way with the 
+	  conditionalAndExpression(). The difference between all of them is that
+	  each one of those operators has its own J file that I need to call and
+	  that is what I have done. As for the operators that I added, I started
+	  by additing in the assignmentExpression() method all the operators that 
+	  had an assign like ALSHIFT_ASSIGN, BAND_ASSIGN, ARSHIFT_ASSIGN, 
+	  DIV_ASSIGN, LRSHIFT_ASSIGN, MINUS_ASSIGN, BOR_ASSIGN, REM_ASSIGN,
+	  STAR_ASSIGN, BXOR_ASSIGN. I added in the equalityExpression() the 
+	  NOT_EQUAL operator along with the J file corresponding to it. In the
+	  relationalExpression() I added the GE and LT operators. In the 
+	  multiplicativeExpression() method I added the operators DIV and REM. In
+	  the unaryExpression() method I added the DEC and unary plus operators. In
+	  the simpleUnaryExpression() method I added the complement operators. 
+	  Lastly, in the postfixExpression(), I added the post increment operator.
+ 
+      Issues and resolution: This problem was quite easy and I did not 
+	  encounter any issues in the implementation of this problem.
+
+   Problem 7 (Conditional Expression)
+      Approach: For the implementation of this problem, I followed the 
+	  precedence of the operators. The conditionalExpression() method is placed
+	  between the assignmentExpression() and the conditionalOrExpression() 
+	  methods. In the first block {}, I included all the variables that I 
+	  needed for this problem. Those variables are an integer for the line, and
+	  JExpression variables for the lhs, thenPart, and elsePart of the 
+	  conditional expression. I saw these variables from the implementation of
+	  the Parser.java file which I completed in project 3. In the second block
+	  {}, I included a try-catch block like every other method has in this 
+	  file. In the try block, I included the grammar as shown in the attached 
+	  grammar file on the writeup. I am including a conditionalOrExpression in
+	  the lhs variable, then I am taking the line number were the conditional
+	  expression is starting. I continue by 0 or 1 options of a QUESTION "?",
+	  which is followed by an expression (thenPart), which is followed by a 
+	  COLON, which is followed by a conditional expression (elsePart). Create a
+	  new JConditionalExpression and save it in the variable lhs which is 
+	  eventually returned. With this implementation my AST was produced with no
+	  issues.
+
+      Issues and resolution: We have so much information given to us, that made
+	  the implementation of this problem very easy. Thus, I did not encounter 
+	  any issues with it.
+
+   Problem 8 (Do Statement)
+      Approach: For the implementation of this problem I made changes in the 
+	  statement() method. I added an extra or choice in try block. This choice
+	  starts with the reserved word <DO>. I am recording the line number this
+	  statement starts, then I continue by getting the statement following DO.
+	  This statement is then followed by a while, which is followed by a 
+	  parenthesized expression and a SEMI. Finally, I am creating new 
+	  JDoStatement.
+
+      Issues and resolution: For one more time, this problem was easy to 
+	  implement, thus I did not have any issues with it. I have to say that
+	  it was very helpful that we have solved this problems before in the 
+	  Scanner.java, and the Parser.java. Now, we know exactly how many 
+	  variables we need, and how the grammar works. Having the grammar, and the
+	  Parser.java makes this so much easier than expected.
+	  
+
+   Problem 9 (For Statement)
+      Approach: For this problem, I made changes in the statement() method, and
+	  I also added two methods that is dealing with the forInit part and the 
+	  forUpdate part of a for loop. In the statement() method, I start by 
+	  getting the reserved word FOR which is always followed by a LPAREN, 
+	  RPAREN, and statement. Between the LPAREN and the RPAREN, we can find 0
+	  or 1 init always followed by a SEMI, 0 or 1 expression always followed
+	  by a SEMI, and an update. To get the init and the update, I am creating
+	  two methods: the forInit() and the forUpdate(). The forInit() doesn't 
+	  take any parameters, but it returns a list of statement expressions or a
+	  single variable declarator as recommended in the writeup. The forUpdate()
+	  method doesn't take any parameters, but it returns a list of statement
+	  expressions. Both of these methods contain two blocks, in the first block
+	  we can find all the declared variables needed for each method. In the
+	  second block we have a try-catch statement. For the forInit() method, we
+	  have the following variables: an array list statements of type 
+	  JStatement, an array list vdecls of type JVariableDeclarator, a 
+	  statement of type JStatement, the line, and a type of type Type. I knew
+	  that I needed those variables because of the Parser.java that we created
+	  on the previous project. In the block with the try-catch statement, we 
+	  are adding 1 or more statement expressions in the statements list or we
+	  are adding a single variable declarator, and we are returning that list.
+	  For the forUpdate() method, we have the following variables: an arraylist
+	  statements of type JStatement, and a statement of JStatement. In the 
+	  try-catch block, we are adding 1 or more statement expressions in the 
+	  statements list. One more change I added was in the statementExpression()
+	  method, where I added an instance of JStatement. With this 
+	  implementation, I was able to make the FOR statement work with no issues.
+
+      Issues and resolution: I did not really have a lot of issues with the
+	  implementation of the FOR statement. But I will talk about one small fix
+	  I did in my code. At first, I had kleene closure for the inits, the 
+	  expression, and the update. But, I realized that the right way to 
+	  implement this is with the [] rather than with the ()*. My code worked
+	  with either, but the right way is with the square brackets.
+
+   Problem 10 (Break Statement)
+      Approach: This problem was the easiest and shortest to type along with 
+	  continue statement below. The only changes I made for this one are placed
+	  in the statement() method. I added one more or choice in the try block 
+	  that deals with the BREAK. This statement starts with the reserved word
+	  BREAK. I am getting the line this statement starts, and right after, I am
+	  looking for a SEMI. Finally, I am returning a new statement of type 
+	  JBreakStatement().
+
+      Issues and resolution: Because of how easy this problem is, I did not 
+	  encounter any issues with it.
+
+   Problem 11 (Continue Statement)
+      Approach: This problem was the easiest and shortest to type along with 
+	  break statement above. The only changes I made for this one are placed
+	  in the statement() method. I added one more or choice in the try block 
+	  that deals with the CONTINUE. This statement starts with the reserved 
+	  word CONTINUE. I am getting the line this statement starts, and right 
+	  after, I am looking for a SEMI. Finally, I am returning a new statement
+	  of type JContinueStatement().
+
+      Issues and resolution: Because of how easy this problem is, I did not 
+	  encounter any issues with it.
+
+   Problem 12 (Switch Statement)
+      Approach: For this problem, I made changes to the statement() method, and
+	  I also added two extra methods as stated in the grammar attached in the 
+	  writeup. In the statement() method, I am firstly parsing the reserved 
+	  word SWITCH, which is followed by a parenthesized expression, which is 
+	  followed by a LCURLY and a RCURLY. Between the LCURLY and the RCULRY, we
+	  can find 0 or more switch block statement groups, which we are adding to
+	  the stmtGroup list. The first method I have implemented is called 
+	  switchBlockStatementGroup() that returns a switch statement group. In
+	  this method we have two blocks. In the first one, we are including all 
+	  the variables needed for this method which are a labels array list of 
+	  type JExpression, a stmtBlock array list of type JStatement, a label of
+	  type JExpression, and a stmtblock of type JStatement. In the second 
+	  block, we have a try-catch where in the try we are adding 1 or more 
+	  labels in the labels list, and 0 or more block statements in the 
+	  stmtBlock list. For this method, I needed to make use of another method
+	  called switchLabel() that returns an expression. As with previous method,
+	  we again have two blocks in the method with the first one containing the
+	  needed variables, and the second one have a try catch, where I am parsing
+	  the switch label AST. A switch label could start with the reserved word 
+	  CASE followed by and expression and a COLON, or it could be a DEFAULT 
+	  followed by a COLON. This implementation gave me the AST I wanted.
+
+      Issues and resolution: The only issue I encountered for this problem is
+	  a Null Pointer exception. This was happening because I had my lists set
+	  to null rather than new Arraylist<>(). With the change from null to new
+	  ArrayList, I fixed my issues and I was able to get the AST with no 
+	  errors.
+
+   Problem 13 (Exception Handlers)
+      Approach: For this problem, we had to add to the j--.jj parser a lot of
+	  things. I have added the options for the exception handlers in the 
+	  statement() method. In this method, I have the option for the reserved
+	  word THROW, which is followed by an expression, which is followed by a
+	  SEMI. I also have added the option for the try, catch, and finally. These
+	  three words are located in the same statement. A try statement is 
+	  followed by a block, named the tryBlock. This block is followed by 0 or
+	  more catch statements that start with the reserved word CATCH, which is
+	  followed by a LPAREN, which is followed by a list of 1 or more formal
+	  parameters, which is followed by a RPAREN, which is followed by a list of
+	  1 or more blocks, named as catchBlocks. There can also be an optional 
+	  finally, which starts with the reserved word FINALLY followed by a block.
+	  One more change for this problem has happened in the memberDecl method. I
+	  have added optional THROWS in the constructor, and method declarations.
+	  In the constructor, I added an optional THROWS, which is being parsed as
+	  follows: first, I am parsing the reserved word THROWS which is followed 
+	  by a list of 1 or more qualified identifiers. The JConstructorDeclaration
+	  is taking as a new argument the list exceptions rather than null. For the
+	  part that deals with the method declaration, I added the same code with 
+	  the one I added on the constructor, and I just changed one of the 
+	  arguments in the JMethodDeclaration from null to exceptions. With those
+	  changes I was able to complete this problem.
+
+      Issues and resolution: This problem was quite challenging compared to 
+	  the other ones above. I initially was producing a different AST from the
+	  one given by the professor. The problem with my AST is that I was getting
+	  a line that contained an empty list of throws where it was not supposed 
+	  to be. I thought of fixing this by adding an if statement when I was 
+	  returning JConstructorDeclaration, and JMethodDeclaration. With this if 
+	  statement, I was checking if the list with the exception was empty or 
+	  not. If it was empty, I was returning null for the exception, otherwise,
+	  I was returning the list exceptions as one of the arguments of the 
+	  JConstructorDeclaration and JMethodDeclaration methods. This was not 
+	  entirely wrong, but according to the professor, I didn't need to do all
+	  that. The professor told me that I was getting that empty array because 
+	  I was creating it in the block with the variables rather than in the 
+	  block with the try-catch. He recommended to have the list initialized to
+	  null in the block with the variables and create the array in the try 
+	  instead. I have an example, of my implementation with the if statement in
+	  the classDeclaration method. Both my way and the professor's way work 
+	  just fine. 
+	  
+   Problem 14 (Interface Type Declaration)
+      Approach: For this problem, a lot of changes have been made, and a few
+	  methods have been added. The methods I changed are: typeDeclaration(),
+	  and classDeclaration(). The methods that have been added are: 
+	  interfaceDeclaration(), interfaceBody(), and interfaceMemberDecl(). In
+	  the method typeDeclaration(), I changed the name of a variable from a
+	  classDeclaration to typeDeclaration. I added a LOOKAHEAD to check for
+	  modifiers followed by the reserved word CLASS, in which case, we are 
+	  looking at a class, otherwise, we are looking at an interface. For the
+	  interface, I am calling the method interfaceDeclaration() which takes as
+	  an argument the modifiers. In the method classDeclaration(), I added an
+	  optional IMPLEMENTS that is followed by 1 or more qualified identifiers.
+	  For the optional IMPLEMENTS, I need two extra variables, one is a list of
+	  TypeName and the other one is a variable needed for that list and it's of
+	  TypeName. The optional implements is contained within the [] and the 
+	  parsing starts by parsing the reserved word IMPLEMENTS followed by the
+	  list of 1 or more qualified identifiers. In order to return the 
+	  JClassDeclaration, I have added an if statement in which I am checking if
+	  the list with the qualified identifiers is empty or not. If it is empty
+	  then I am returning a JClassDeclaration with a null as one of its 
+	  arguments, otherwise, I am returning the qualified identifiers list as 
+	  one of the arguments. Now, regarding the new methods I implemented, I had
+	  as guidance the implementation from project3. I created a method 
+	  interfaceDeclaration that is of type JInterfaceDeclaration and takes an
+	  array list as an argument. This method is implemented in a very similar
+	  way with the classDeclaration() method. It also contains two blocks. In
+	  the first block, I have all the variables needed for this method, and in
+	  the second I have the try-catch block like every method has had in this
+	  project. The variables needed are line, name, an array list 
+	  superInterfaces of type TypeName, and array list interfaceb of type 
+	  JMember, and superInt. In the second block, in the try block, I am 
+	  parsing an interface, which is followed by an identifier, which is 
+	  followed by an optional extends and it should always end with the 
+	  interface body. The optional extends normally is followed by a list of 1
+	  or more qualified identifiers. The method interfaceBody() is implemented
+	  in a very similar way with the classBody() method. The only difference is
+	  that I making sure the modifiers contain ABSTRACT because an interface is
+	  abstract. Lastly, my final method, interfaceMemberDecl() takes as an 
+	  argument an list of modifiers, and returns a member declaration. This
+	  method is implemented in the same way with the memberDecl() method after
+	  implementing the optional THROWS but without the constructor. The 
+	  interfaceMemberDecl contains method declarations or field declarations. 
+
+      Issues and resolution: In this problem, I encountered the biggest issue
+	  that I could not figure out by myself. I was getting an error that was
+	  saying that "class" found where "{" was sought. I had no idea as to how I
+	  could fix this, thus, I went to office hours and got help from the 
+	  professor. The professor told me that this was caused because I did not
+	  have a LOOKAHEAD in the typeDeclaration() method. This lookahead would 
+	  help in the distinction of an interface and a class. Once we fixed this, 
+	  the error disappeared, and I managed to produced the right AST. 
+
+5. List any other comments here. Feel free to provide any feedback on how
+   much you learned from doing the assignment, and whether you enjoyed
+   doing it.
+
+   I have to say that this homework was not necessarily hard. In fact, after
+   doing project3, this project was easier to implement. I had to pay attention
+   to some small details, but with a little bit of help from the professor, 
+   those errors were fixed. Generally, I enjoyed doing this project. 

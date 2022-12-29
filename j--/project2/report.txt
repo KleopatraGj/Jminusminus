@@ -1,0 +1,217 @@
+1. Enter the number of hours it took you to complete the project between
+   the <<< and >>> signs below (eg, <<<10>>>).
+
+   <<<10>>>
+   
+2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
+   between <<< and >>> signs below (eg, <<<3>>>).
+
+   <<<1.5>>>
+
+3. Did you receive help from anyone? List their names, status (classmate, 
+   CS451/651 grad, TA, other), and the nature of help received.
+
+   Name               Status       Help Received
+   ----               ------       -------------
+
+   ...                ...          ...
+
+4. Provide a short description of how you approached each problem, issues you 
+   encountered, and how you resolved those issues.
+
+   Problem 1 (Multiline Comment)
+      Approach: The multiline comment will be dealt in the case where we check
+		that a character is '/'. In this case, we have quite a few options. A 
+		single '/' means that we are dealing probably with a division, a '//' 
+		means that we are dealing with a single line comment, and a '/*' means
+		that we are most likely dealing with a multiline comment. If there are
+		more '/' after a '//' or after a '/*' then those slashes are being 
+		ignored because they are part of the comment. I added a multiline 
+		comment by adding an else if for the star '*'. After the star, we are 
+		trying to ignore all the characters that can be located in the same 
+		line with the '/' and '*' combination, or it can be located in a 
+		different line, hence the name multiline comment. Therefore, I took the
+		while loop from the case where we are dealing with the single line 
+		comment. In the condition of that while loop says that unless you find 
+		a new line or the end of character then keep ignoring characters. In 
+		the case, of the multiline comment, the new line character needs to be 
+		ignored because	we can continue a comment in as many line as we want.
+		Therefore, my loop will	conitnue looping until it finds the end of 
+		character, or until there is another condition in the loop that will 
+		break it. The multiline comment has something special, it will always
+		end with the character '*' followed by a '/'. Thus, inside the while 
+		loop I have, I am getting the next character, and I am checking with an
+		if statement, if the character is a '*'. If it is, then I get the next
+		character, and with a nested if, I check if that character is a '/'. If
+		it is, I break the loop, and the multiline comment is over, otherwise, 
+		the other characters are ignored. I tried to create a state transition 
+		diagram, but I felt that it made things a little bit more complicated 
+		for me. I also believe that my transition diagram is not correct. I 
+		founded more helpful just thinking and looking at how a multiline 
+		comment looks like rather than with the state diagram. It also helped
+		a lot to look at the file that I was supposed to test.
+
+      Issues and resolution: One of the issues that I encountered was with the 
+		loop I used. Because I took the condition of the while loop from the 
+		single line comment case, when I tested my code I was getting an 
+		unidentified input token '@'. Of course, this error did not really 
+		help into fixing my	problem, but I knew that something was wrong with 
+		it. So, I decided to change	the while (ch = '\n' && ch = EOFCH) to 
+		while (ch = '\n' || ch = EOFCH). This fixed the issue and my code 
+		worked. After, giving some thought to this matter, I realized that we 
+		don't need to look at the new line character at all. Thus, I deleted it
+		and now the condition of my while loop looks like this: 
+		while(ch = EOFCH).
+	
+   Problem 2 (Operators)
+      Approach: This problem was not hard to implement, but that doesn't mean
+		that I didn't encounter any issues. I will talk about those issues in
+		the	Issues and resolution section below. The first thing I did was to
+		add the new	operators in the TokenInfo.java file, the lexicalgrammar 
+		file, and the grammar file. Lastly, I made changes to the Scanner.java,
+		as mentioned in the writeup. Those changes contain the addition of a 
+		quite a few if statements within the operators that were already there.
+		For example, the star operator was already in the Scanner.java file and
+		it looked like this:
+		case '*':
+              nextCh();
+              return new TokenInfo(STAR, line);
+
+		With the changes I made, the case of the star operator looks like this:
+		case '*':
+              nextCh();
+              // Check if after a star there is an '=' for the operator *=,
+              // which I named as MUL_ASSIGN
+              if (ch == '=') {
+                  nextCh();
+                  return new TokenInfo(STAR_ASSIGN, line);
+              // Otherwise just get the start sign
+              } else {
+                  return new TokenInfo(STAR, line);
+              }
+		
+		Technically, I have added the operator "*=", which I named STAR_ASSIGN. 
+		I followed the same exact logic for all the other operators that needed
+		to be added and they were not already there. To be more precise, I 
+		added the following operators: ? named as CONDITIONAL, : named as 
+		COLON, != named as LNOT_ASSIGN, /= named as DIV_ASSIGN, -= named as
+		DIV_ASSIGN, %= named as REM_ASSIGN, >>= named as ARSHIFT_ASSIGN, >>>=
+		named as LRSHIFT_ASSIGN, >= named as GE, <<= named as ALSHIFT_ASSIGN,
+		< named as LT, ^= named as BXOR_ASSIGN, |= named as BOR_ASSIGN, || 
+		named as LOR, and &= named as BAND_ASSIGN. The most complicated if 
+		statements were for the <<=, the >>>=, and the >>= operators. 	
+       
+      Issues and resolution: I had unnessary nextCh() in some operators and 
+		more specifically the shifting operators. The extra nextCh() were 
+		looking at the next character when the actual operator had already 
+		been found. To implement this problem we needed to add a lot of if and
+		else if statements, and I had also messed up a few of them. That didn't
+		allow me getting the right result. I solved this by looking at the 
+		results gradescope gave me. At first, I was trying to compile some of 
+		the files given to us for this project but IntelliJ was throwing an 
+		error that was saying "found where class was sought". I realized that,
+		in fact, I had to use the option -t in the command line in order to be
+		able to see the right results.
+   
+   Problem 3 (Reserved Words)
+      Approach: This problem was very easy to implement. As mentioned in the 
+		writeup, the only changes that need to happen are in the TokenInfo.java
+		and The Scanner.java. Thus, I have added all the necessary reserved 
+		words in an alphabetical order in both the TokenInfo.java file, and the
+		Scanner.java. I used alphabetical order because that's how they are 
+		shown in the book appendix. I have also updated the lexicalgrammar file
+		and the grammar file, even though we are not being asked to do so. The
+		token kind of these reserved words is written with all capital letters,
+		while the token image is with lower case letters. The names of these
+		reserved words is the same as in the writeup.
+
+      Issues and resolution: I did not encounter any issues with this problem.
+
+   Problem 4 (Literals)
+      Approach: The first things I did for the implementation of this problem
+		was to make changes in the lexicalgrammar file, and the grammar file. 
+		As pointed in the writeup, we are making changes also in the 
+		TokenInfo.java file. I added to the literals part of the code the token
+		kind LONG_LITERAL along with its image "<LONG_LITERAL>". The 
+		implementation for the long literal was	not hard to do, it is just a
+		small extension of the integer literal. What I mean is that long 
+		literals are integers that are followed by the upper or lower case L 
+		('L', 'l'). Thus, in the file Scanner.java, inside the case '9', where
+		the INT_LITERAL is placed, I added an if statement after the while 
+		loop with the digits is done. That if statement checks if the last 
+		character scanned is a 'L' or a 'l', and if it is then I added it in 
+		the buffer, and I return a TokenInfo with arguments a long literal, 
+		the buffer, and the line. When it comes to the case of the double 
+		literal, things get a little bit more complicated. At first, I added
+		the DOUBLE_LITERAL along with its image "<DOUBLE_LITERAL>" in the 
+		TokenInfo.java file. In the file Scanner.java, in order to make	this
+		part of the code to work, I was continuously running and looking at the
+		DoubleLiterals.java file. I have to admit that I didn't make a state
+		transition diagram. I decided to use a trial and error method. Thus, I
+		started my implementation by adding an if statement that checks if 
+		a character after a single digit or a series of digit is a 'D' or 'd'.
+		In that case, I was adding that character in the buffer, and I was
+		returning a TokenInfo with a double literal, the buffer, and the line.
+		I tested my code with the ./bin/j-- -t project2/DoubleLiterals.java. I
+		saw that the first few lines of that file turned out to be double 
+		literals, while the rest of them were either integer literals or other
+		kinds of token kind. From there, I saw that in the file 
+		DoubleLiterals.java there were options that contained the decimal 
+		point. In fact, I was looking mostly for the examples that had a series
+		of digits, the decimal point and then another series of digits. This 
+		led me to add another if statement that checks if a character is a dot
+		after a series of digits. I added the dot in the buffer with the digits
+		and I look with a while loop if there are more digits after the dot
+		which I am adding in the buffer, as well. From there, I also saw 
+		examples that contained the decimal point but also the characters 'D'
+		or 'd' at the end. Inside the if statement for the decimal point, I 
+		added a nested if statement that checks for a 'D' or 'd' which is 
+		always going to be at the end of a double. The case that was the most
+		complicated was the case of the exponent for which we could find a 
+		lot of different cases. It could be either after the decimal point or
+		after a series of digits. I followed the same logic with the '.' option
+		and I included more if statements and nested if statements under the
+		case 9. I have to add that in the file DoubleLiterals.java there are 
+		examples that start with a decimal point. Therefore, in the case '.', I
+		added some if statements and nested if statements and a while loop that
+		would get all the digits. All those checks seem to be very similar to 
+		each other, and there are certain parts that seemed to be repeated. 
+		When I encountered, that situation I created a helper method of type
+		TokenInfo that has two parameters, one that is of type StringBuffer, 
+		and the other one being a char. I copied the code that was repeated
+		in the method, and now my code is significantly smaller. This helper 
+		method deals with the case where there is an exponent involved in a
+		double literal. 
+
+      Issues and resolution: This problem, I believe, was the most challenging
+		than any of the other problems above. However, it was still not 
+		incredibly hard to deal with. I did encounter some issues as I was 
+		trying to make this	part of the scanner work. First issue I encountered
+		was with the long literal. When I was checking if after a single digit,
+		or a series of digit, we have a 'l' or 'L', I was returning directly 
+		the TokenInfo, like it was happening with the integer literal. However,
+		this was wrong, because gradescope was yelling at me for not having the
+		proper elements showing. I realized, that I needed to add the 'l' or 
+		'L' in the buffer and then ask for the next character. As a result, the
+		problem with the long literals was fixed. When it comes to the case of 
+		the double literals, because I used the trial and error method to solve
+		it, I didn't encounter a lot of issues with it. I was building it piece
+		by piece. One of the issues I encountered was in the creation of the 
+		helper method. I knew that I needed to create a helper method that 
+		would include lines of code that are being repeated. I tried to do 
+		that for the Exponent case that was repeated, and it worked. However,
+		I still have parts of code that are being repeated, and even tho I 
+		tried to create more helper methods, my code was not working. Thus,
+		I decided to not create another helper method and just keep the one 
+		for the exponents. My code is still quite long but it works this way.
+		I have included plenty of comments in order to make my code 
+		understandable and readable to others. 
+
+5. List any other comments here. Feel free to provide any feedback on how
+   much you learned from doing the assignment, and whether you enjoyed
+   doing it.
+
+   I have to say that I enjoyed doing this assign. Some of the tasks might have
+   gotten a little bit frustrating, like problem 4 with its repetition. 
+   However, I did enjoy doing this homework. It's always nice when something is
+   simple and it doesn't give you a lot of pain to complete.

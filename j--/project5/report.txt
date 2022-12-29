@@ -1,0 +1,654 @@
+1. Enter the number of hours it took you to complete the project between
+   the <<< and >>> signs below (eg, <<<10>>>).
+
+   <<< 70 >>>
+   
+2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
+   between the <<< and >>> signs below (eg, <<<3>>>).
+
+   <<< 4.5 >>>
+
+3. Did you receive help from anyone? List their names, status (classmate, 
+   CS451/651 grad, TA, other), and the nature of help received.
+
+   Name               Status       Help Received
+   ----               ------       -------------
+
+Swami Iyer       professor     I have visited office hours to get help
+							for problem 1, 4, 7, 8, and 9. The professor helped
+							me with some concepts that were confusing, as well
+							as with some debugging. He also gave me a lot of 
+							advice on how to handle certain problems. I have
+							more details about the help I got in the rest of
+							this report.
+							
+
+Ksenia			classmate	 Ksenia gave a small tip about the problem where
+						   we are implementing the breakStatement, which I 
+						   am referring to in the problem with the break
+						   statement below.							
+
+4. Provide a short description of how you approached each problem, issues you 
+   encountered, and how you resolved those issues.
+
+   Problem 1 (Long and Double Basic Types)
+      Approach: This problem, was very challenging because there were a lot of
+	  files that needed to be changed, and there was also an issue that I could
+	  not resolve by myself, for which I will be talking on the issues and 
+	  resolution section below. The first change I did for this homework was in
+	  the JLiteralDouble, and JLiteralLong files. For the JLiteralDouble, 
+	  things were a little bit easier than for the JLiteralLong. In the 
+	  JLiteralDouble, I have included an extra method that will return a 
+	  literal as a double, by using the method parseDouble. This method was 
+	  found and implemented in a very similar way to the one included in the 
+	  JLiteralInt file, and it is called toDouble(). Then, I implemented the 
+	  analysis by making sure that the type is DOUBLE. Finally, I implemented
+	  the codegen() in a very similar way with the codegen in the JLiteralInt
+	  file. The difference between the two is that there are only 2 constants
+	  available for the case of the double. My conditions in this codegen() 
+	  include numbers that are of type double. For the JLiteralLong, we were 
+	  given in one of the lectures a tip. The professor told us to find a way 
+	  to exclude the final "L" or "l" in a long literal because the parseLong 
+	  cannot handle that letter very well. Thus, I am checking if the literal
+	  contains an "L" or "l", and I am exluding those letters, by using the 
+	  method replace, which takes as a first argument one of those letters, and
+	  as a second argument it takes the letter that we will replace it with, 
+	  which in our case is nothing. At the end, I am calling parseLong. I 
+	  continued with the analysis which requires the type to be Long, and the 
+	  codegen(). The codegen for the long literals is very similar with the 
+	  double literals. For the long literals, we also have two constants that
+	  we can use. The next step for the implementation of this problem was to
+	  modify the JCastOp file. In the conversions method, I have added some 
+	  conversions. Those include: int to long, int to double, long to int, long
+	  to double, double to int, and double to long. I also added boxing for 
+	  longs and doubles, because a long can always be cast to a Long, and a 
+	  double can always be cast to a Double. I also added unboxing for those
+	  two because a Long can be a cast to a long, and a Double can be a cast to
+	  a double. At the end of this file, I have also added some converter 
+	  classes that are similar to the I2C class. The classes I added are: I2L,
+	  I2D, L2I, L2D, D2I, and D2L. There may be more converters that we could 
+	  add but these were enough to make the first problem work. Additionally, I
+	  added in the JMethodDeclaration file, in the partialCodegen() method, 
+	  checks for return types that can be long or double. The implementation 
+	  was similar to the return type int. The next step was to allow skipping 
+	  offsets for longs and doubles in the JConstructorDeclaration, 
+	  JMethodDeclaration, and JVariableDeclaration files. This change is placed
+	  in the analyze() method. In the JMethodDeclaration file, in the 
+	  analyze(), inside the for loop for the parameters, I have added a 
+	  condition that checks if a parameter is of type long or double, and if it
+	  is I am skipping an offset. I have placed this condition after we add an
+	  entry. I have done the same for the JConstructorDeclaration file, in the
+	  analyze() method. In the JVariableDeclaration, in the analyze() method, 
+	  I have included a similar condition inside the for loop for the 
+	  declarators after the add Entry. Next, I modified the JReturnStatement 
+	  file, in the codegen. I added conditions that check if an expression is
+	  of type long or double. Furthermore, I modified the JVariable file, in
+	  the codegen() method. In fact, I added the primitive types long and
+	  double in the same way the primitive int is implemented. The difference
+	  is that I used the proper load instructions for the longs and doubles 
+	  (LLOAD, DLOAD). In the same file, I also modified the method 
+	  codegenStore. I also added options for the primitive types long and 
+	  double. The code is very similar to the primitive int, but with the 
+	  instructions that correspond to longs and doubles (LSTORE, DSTORE).
+	  Another file that I made some changes in is the JArrayExpression. The
+	  methods I modified are codegen, codegenLoadLhsRvalue, and codegenStore.
+	  In the codegen, I added conditions that check for types that are long and
+	  types that are double in a similar way as the integer type but with the 
+	  proper instructions (LALOAD, DALOAD). In the codegenLoadLhsRvalue, I did
+	  the exact same change with the codegen. In the codegenStore, I also did
+	  the same modifications, but I changed the instructions from load to 
+	  store, properly for the long and double types (LASTORE, DASTORE). Lastly,
+	  one more modification happened to the file JArrayInitializer, and more 
+	  specifically, in the codegen() method. I have added conditions that check
+	  if the initial value in the array is of type long or double with the 
+	  proper instructions (LASTORE, DASTORE).
+	  
+      Issues and resolution: Of course, with so many changes in so many files
+	  there were some issues. In fact, the issue I struggled the most was with
+	  skipping the offsets for the longs and doubles. This seemed to be the 
+	  issue that many students encountered, since, there were a lot of 
+	  questions on Piazza. For this, I was getting some errors that were very
+	  similar to the following, "(class: BasicTypes, method: quadratic 
+	  signature: (DDD)V) Unable to pop operand off an empty stack". To fix this
+	  issue, I went to office hours and got help from the professor. According 
+	  to him, I was skipping the offset at the wrong part of the code. I was 
+	  trying to do so before adding an entry, while the professor recommended
+	  to do the skipping after. I changed the files JConstructorDeclaration, 
+	  JMethodDeclaration, and JVariableDeclaration from skipping before the 
+	  addEntry, to skipping after. This fixed this issue but more issues were
+	  popping. I had issues were my generated code would show different
+	  instructions from the one produced by javac. For this issue, the 
+	  professor helped me again. He found that in the JVariable file, I was 
+	  using cases that started from 1 and ended at 4, while the instructions
+	  started from 0 and ended at 3. I changed my cases from 0 - 3, and that
+	  fixed my final issue. Now, this problem works perfectly fine.
+
+   Problem 2 (Operators)
+      Approach: This problem was not very hard to implement, but it was 
+	  challenging because we needed to modify a lot of files and methods. 
+	  Firstly, I started with the modification of the JUnaryExpression file. I
+	  changed the analyze method of the JNegateOp in order to allow the support
+	  of the int, long, and double types. I have added conditions, in which I
+	  check if the operand is one of the mentioned types, and then I give the
+	  variable type, the proper type (INT, LONG, DOUBLE). I went even further,
+	  from what the instructions wanted, and I made changes in the codegen of
+	  the JNegateOp. I am again checking to see what type does the operand have
+	  and I am using the proper instruction if the operand is LONG, INT, DOUBLE
+	  (LNEG, INEG, DNEG). In the same file, I also did changes in the 
+	  JUnaryPlusOp. In the analyze method, I am checking for the type of the
+	  operand, like I did with the JNegateOp, and according to the result of my
+	  checks I give the proper type (LONG, INT, DOUBLE) to the variable type.
+	  In the same file, I implemented the JPostIncrementOp, and 
+	  JPreDecrementOp. In the JPostIncrementOp, in the analyze(), I have copied
+	  the code that is written in the JPostDecrementOp with a small change in 
+	  the message that is being printed. I changed the -- to ++. For the 
+	  codegen, I also copied the codegen of the JPostDecrementOp to the 
+	  JPostIncrementOp. I only changed the constValue argument of the 
+	  addIINCInstruction from -1 to 1 because we are dealing with increment and
+	  not decrement. I also changed the ISUB instruction to IADD. In the 
+	  JPreDecrementOp, in the analyze(), I have copied the code that is written
+	  in the JPreIncrementOp with a small change in the message that is being
+	  printed. I changed the ++ to --. For the codegen, I also copied the 
+	  codegen of the JPreIncrementOp to the JPreDecrementOp. I only changed the
+	  constValue argument of the addIINCInstruction from 1 to -1 because we are
+	  dealing with decrement and not increment. I also changed the IADD 
+	  instruction to ISUB. I made changes in the file JBooleanExpression, for 
+	  the JLogicalOrOp, and the JNotEqualOp. For both cases, I copied lines of
+	  code from the analyze and codegen of the JLogicalAndOp to the 
+	  JLogicalOrOp, from the analyze and codegen of the JEqualOp to the 
+	  JNotEqualOp. I made only some small modifications. For the JLogicalOrOp,
+	  onTrue, I have the targetLabel as argument and boolean true for both lhs
+	  and rhs, and, otherwise, I have falseLabel and boolean true for the lhs,
+	  and targetLabel, and false for the rhs. In fact, I just included the 
+	  opposite elements from the JLogicalAndOp which makes sense since AND is
+	  only true when both lhs and rhs are true, while that is not the case for 
+	  the JLogicalOrOp. For the JNotEqualOp, I just changed the base branch and
+	  alternate branch to the opposite of what the JEqualOp has. In the case of
+	  the JNotEqualOp, the base branch contains IF_ACMPNE or IF_ICMPNE, while 
+	  the alternative one has IF_ACMPEQ or IF_ICMPEQ. Next, I made changes in 
+	  the JComparisonExpression files. In the analyze method, I added 
+	  conditions that check if the lhs and rhs operands are of a certain type
+	  (INT, LONG, DOUBLE), and I give the proper type to the variable type. 
+	  Since, I am implementing JGreaterEqualOp and JLessThanOp to support the
+	  three types, above, I thought that it would be necessary to do the same
+	  for the JLessEqualOp and JGreaterThanOp, which I did first. In the 
+	  codegen for both JLessEqualOp and JGreaterThanOp, I have added conditions
+	  in which I check the types of the lhs and rhs, and I add the proper 
+	  instruction, LCMP for longs, DCMPG for doubles, and nothing for ints. I 
+	  copied the code from the JGreaterThanOp, to the JGreaterEqualOp, and I 
+	  changed the branchig instructions. Then, I copied the code from the
+	  JLessEqualOp, to the JLessThanOp. The next modification happened in the
+	  JBinaryExpression file. I modified JPlusOp, JSubtractOp, JMultiplyOp, 
+	  JDivideOp, and JRemainderOp. In the analyze of the JPlusOp, I added 
+	  conditions that check for longs and doubles in a similar way with the 
+	  ints. I did the same for the codegen, while giving the proper instruction
+	  to each type (IADD for ints, LADD for longs, and DADD for doubles). 
+	  Having the JPlusOp in mind, I implemented the rest, JSubtractOp, 
+	  JMultiplyOp, JDivideOp, and JRemainderOp, in the same way but I gave the 
+	  corresponding instructions for them. The JSubtractOp has SUB, the 
+	  JMultiplyOp has MUL, the JDivideOp has DIV, and the JRemainderOp has REM.
+	  For each type, there is a specific instruction like with the JPlusOp. 
+	  Finally, the last file I modified was the JAssignment. There are a few
+	  modifications that have happened in this file, and some of them are very
+	  similar to each other. Firstly, I modified the JPlusAssignOp in the 
+	  analyze by adding two extra conditions for types that can be longs or 
+	  doubles. I also modified the codegen in which I also added two extra 
+	  conditions again for the longs and doubles in which I gave the proper
+	  instructions (LADD, DADD accordingly). I continued with the 
+	  implementation of the JMinusAssignOp, JStarAssignOp, JDivAssignOp, 
+	  JRemAssignOp. For all of these, I copied the analyze and codegen of the
+	  JPlusAssignOp, and I made slight modifications that fits each one of 
+	  those assignment operators. Finally, I implemented the JOrAssignOp, the
+	  JAndAssignOp, the JXorAssignOp, the JALeftShiftAssignOpthe, the 
+	  JARightShiftAssignOp, and the JLRightShiftAssignOp. For the JOrAssignOp,
+	  I copied the analyze from the JPlusAssignOp, but I didn't include option
+	  for long and doubles, since the operands need to be ints. Similarly for
+	  the codegen, I copied it from the JPlusAssignOp without the options for
+	  longs and doubles. Of course, I gave the proper instructions for the or
+	  assignment operator. I followed the same steps for the JAndAssignOp, the
+	  JXorAssignOp, the JALeftShiftAssignOpthe, the JARightShiftAssignOp, and
+	  the JLRightShiftAssignOp. Once I again, I did some very small 
+	  modifications on the copy-pasted code to fit the operator I was working 
+	  on each time.
+
+      Issues and resolution: I did not encounter a lot of issues for this
+	  problem. In fact, I didn't have any errors or other difficulties when I 
+	  compiled and tested my code. It was very straightforward. I only have to
+	  say that it was a lot of modifications and implementations that someone
+	  could get easily lost. With careful attention, and with marking which
+	  operator I have completed as I was solving, I was able to complete the
+	  problem without missing anything. There is one more issue related to the
+	  comparison operators, which I didn't realize until I solved the exception
+	  handlers problem. I am talking about this issue in the excpetion handlers
+	  because I have already made this report very big and it is useless to 
+	  repeat myself and waste more of your time, than I already am.
+
+   Problem 3 (Conditional Expression)
+      Approach: This problem wasn't very hard to implement, and it was fairly
+	  smaller than some of the other problems. I implemented code in the 
+	  JConditionalExpression file. In this file, I implemented the analyze and
+	  codegen methods. In the analysis part, I followed very closely the 
+	  instructions given in the writeup. Analyzed the condition and made sure
+	  that is of type boolean by using the analyze() and the mustMatchExprected
+	  methods accordingly. I continued by analyzing the consequent (thenPart),
+	  and the alternate (elsePart). I used one again the mustMatchExprected 
+	  method to make sure that the thenPart and the elsePart are of the same 
+	  type. At the end, since the elsePart and thenPart are of the same type, I
+	  saved one of them in the variable type. I continued my implementation 
+	  with the codegen method. For the implementation of the codegen, I 
+	  consulted the JIfStatement file. In fact, most of the code was copy 
+	  pasted. The only difference is that for the if statement, the alternate
+	  is optional, while for the conditional expression is not. Thus, I did not
+	  check the cases were the consequent and the alternate are null. To give
+	  more detail about my work here, in the codegen, first, I am creating two
+	  labels, one that will lead to the else part (alternate), and one that 
+	  exits from the conditional expression. Then, I generate code for the 
+	  condition, which when is false it jumps to the elseLabel, otherwise it
+	  falls through and goes to the consequent. For the consequent, I am 
+	  generating code, and I do an unconditional branch to the endLabel, which
+	  exits the conditional expression. If the condition had led to the 
+	  alternate, I generate code for it, and I go to the endLabel.
+
+      Issues and resolution: This problem was very straightforward. The 
+	  instructions were very clear, and the fact that we had the if statement
+	  implemented was very helpful. Thus, I did not encounter any issues or
+	  errors with it. It worked with the first try.
+
+   Problem 4 (Do Statement)
+      Approach: This was another problem that was very straightforward and 
+	  short. In fact, I believe that some part of this was given as an answer
+	  in a lecture from a student in the whole class, and the professor can 
+	  confirm it. The implementation happened in the JDoStatement, again, in 
+	  the analyze and the codegen methods. In the analyze, needed were only 
+	  three lines of code, one is to analyze the condition, one to make sure
+	  that the condition is of type boolean, and the last one is to analyze the
+	  body. For the implementation of the codegen, I got some of the 
+	  information needed from the book on page 179. At first, I am creating a
+	  label, which I called topLabel. I am adding that label. I continued with
+	  generating code for the body, and then generating code for the condition,
+	  which when it's true goes back to the topLabel to create the loop 
+	  functionality we want. And, that was this whole problem.
+
+      Issues and resolution: Similarly, with problem 3 above, this was very
+	  straightforward and easy to implement, since part of it were either 
+	  provided in class or from the book. When I tested my code, I did not 
+	  encounter any errors or issues. Issues I encountered where later with the
+	  implmentation of the break and the continue. But I will talk about those
+	  later.
+
+   Problem 5 (For Statement)
+      Approach: This problem was more challenging to implement than the 
+	  do-while above. As I did with most of the problems so far, I needed for 
+	  one more time to implement the analyze and codegen methods in the 
+	  JForStatement file, this time. I followed, again, the instructions given 
+	  in the writeup. I created a new LocalContext with context as the parent.
+	  I continued by analyzing the init with the new context, but because the 
+	  init is an arraylist, I added a for loop that iterates through this list
+	  and analyze every init in the list with the new context. Then, I am 
+	  analyzing the condition, and I am making sure that it is of type boolean.
+	  I continued by analyzing the update, which is also an arraylist, and for
+	  which I also iterated through the list and analyzed every single update 
+	  in the new context. Finally, I analyzed the body. I have to say that for
+	  the inits, the condition, and the update I had to enclose the analysis in
+	  if statements that would check if the init, condition, and update are not
+	  null. I did this because of an error I got, which I will describe in the
+	  issues below. Last but not least, I continued with the implementation of
+	  the codegen. In the codegen method, I thought that I will need to 
+	  generate code for all the parts that I did analysis. Thus, I started by
+	  generating code for the init. As I already mentioned, init is an 
+	  arraylist, therefore, I am using a for loop to generate code for each of 
+	  the inits in that list. For some parts of the code, for example, where to
+	  create and add labels, I consulted the JWhileStatement. I did this 
+	  because I remembered from project1, problem 1 that I treated my for loop
+	  as a while loop. Therefore, after generating code for the init, I created
+	  two labels, like in the JWhileStatement, one for which I will allow 
+	  looping and one that would lead at the end of the loop. I added the label
+	  that will allow looping. Then, I continued with generating code for the
+	  condition, which on false ends the loop. I continue by generating code
+	  for the body, and then I continued with generating code for the update,
+	  which is an arraylist, and it was treated in a similar way with the init.
+	  If the update has happened, I do an unconditional jump to the label that 
+	  allows looping. Finally, I am adding the label that brings you out of the
+	  for loop. 
+
+      Issues and resolution: This problem was not exeedingly hard, but it still
+	  caused some issues. Once I had laid out my analyze and my codegen, I 
+	  started testing my code. I got an error that said "Cannot invoke 
+	  'java.util.ArrayList.iterator()' because 'this.init; is null". For this
+	  error, I directly thought that the init part of a for loop can be 
+	  optional which means that it can be either something or null. In the 
+	  case, where we encounter null, we don't really need to analyze or 
+	  generate code that for something that is empty. Thus, I included an if
+	  statement around the analysis and the code generation of the init part,
+	  in both methods, analyze and codegen accordingly. After fixing this small
+	  issue, I tested my code again and I got the same error but this time for
+	  the condition. To fix my problem, I once again used an if statement that 
+	  checked if my condition is not null for both the analyze and the codegen
+	  methods. Before I run my code, I added an if statement for the update
+	  part that would check if the update is not empty, because the update is
+	  also optional like the init and the condition. With those small 
+	  corrections, I tested my code again, and all my issues were resolved.
+
+   Problem 6 (Break Statement)
+      Approach: I have to admit that the break statement on previous projects
+	  was easier than this one. Once again, I followed the instructions 
+	  provided in the writeup. Firstly, I added an enclosingStatement stack in
+	  the JMember file. Then I continued by declaring two instance variables in
+	  each control-flow statement. Those instance variables are hasBreak which
+	  is a boolean and will allow to check if a control-flow statement contains
+	  a break, and a breakLabel, which may have to be added in the control-flow
+	  statements. The reason we have those variables as instance variables is 
+	  that we are going to use them in two different methods in the same file.
+	  I also made them public so they can be accessed by different files. I 
+	  added those variables in the files: JDoStatement, JWhileStatement, 
+	  JForStatement, and JSwitchStatement. The next step was to add, at the
+	  beginning of the analyze method of each of one of those control-flow
+	  statement files, a push to the enclosingStack. This push is a reference 
+	  to each control-flow. To create a reference for every control-flow, I 
+	  used "this". The call to the stack happened by calling the file where the
+	  stack is located (JMember), followed by ".", followed by the name of the
+	  stack, followed by ".", followed by the method push that takes the 
+	  argument "this". At the end of the analysis of each control-flow 
+	  statement, I am popping that reference in a similar way of pushing, while
+	  keeping in mind that pop doesn't take any arguments. The next step was to
+	  keep modifying the control-flow statements, but this time in the codegen
+	  method. In the codegen method, I needed to find the right position to 
+	  check if there is a break label, and in case there is one, I created it
+	  and added it or initialized it with another label, which caused problems 
+	  that I will talk about later. I found with the help of the professor the
+	  right positions. For the JForStatement that is before I generate code for
+	  the body. For the JWhileStatement, it is before I check if the condition 
+	  of the loop is true or false and before the code generation of the body,
+	  for the JDoStatement it is before the code generation of the body. For 
+	  the JSwitchStatement, I am creating the label before I generate code for
+	  the body, but I am adding the label after I added the default label. Once
+	  I was done with modifying the control-flow files, I needed to implement 
+	  the analyze and the codegen of the JBreakStatement itself. As mentioned
+	  in the writeup, I first declared the instance variable enclosingStatement
+	  of type JStatement. In the analyze method, I set this variable with 
+	  whatever is the item on top of the stack that I added in the JMember 
+	  file, and have used in the control-flow statements. To get the top value,
+	  I needed to use peek(). We are also being asked to set the enclosing 
+	  statement's hasBreak variable to true. To do so, I have used an if 
+	  statement in which I check if the enclosingStatement variable is an 
+	  instance of each of the control-flow statements. Depending on the control
+	  flow statement, I am casting the variable enclosingStatement to the right
+	  control-flow form, in order to have access to the instance variable 
+	  hasBreak, which I set to true. Lastly, in the codegen method, I am doing
+	  a similar approach with the analyze method. I have an if statement that
+	  will check if the enclosingStatement is an instance of a specific 
+	  control-flow. According to the result, I cast the proper statement to the
+	  enclosingStatement variable to get access to the breakLabel this time. 
+	  This will help in generating the uncoditional jump to that breakLabel.
+
+      Issues and resolution: For this problem, I had a lot of parts that were 
+	  quite confusing. Firstly, I got stuck on the point where I need to access
+	  the instance variables hasBreak, and breakLabel. I asked the professor 
+	  about it and he recommended to make my variables public, which actually
+	  makes a lot of sence, since we need to access them from different files.
+	  My next confusion was about how would I possibly know if I was working 
+	  with the for statement, the while statement, the do statement, and the 
+	  switch statement. I did some small research, and I found that I can use
+	  and if statement and check which control-flow I look at by using 
+	  "instanceof". Then I was stuck with how to access the variables that I 
+	  needed. I asked help from a classmate, Ksenia, whose last name I don't 
+	  know, and she told be that I need to cast the enclosingStatement
+	  variable to the right control-flow to be able to access the variables I
+	  want. I followed her advice and I was able to write all the necessary 
+	  code. Of course, the issues didn't stop there because I was getting 
+	  errors when I run my code. I don't remember exactly what the error was 
+	  saying word by word, but I know that it was caused because I was adding
+	  my breakLabel in the wrong place in the control-flow files. When I got
+	  those errors I did not know the reason, thus, I visited office hours and
+	  the professor helped me find the right spots for them, which fixed my 
+	  errors, and my code was able to run. To give some more detail, at first,
+	  I was adding my breakLabel after the out label was added, but in that
+	  position the breakLabel was never added because we were out of the loop,
+	  while we need the breakLabel before the out label is added, which is what
+	  the professor recommended.
+
+   Problem 7 (Continue Statement)
+      Approach: I have to admit that the continue statement on previous projets
+	  was easier than this one. However, after implement the break statement, 
+	  this problem was not that hard to implement. I declared again in each 
+	  control-flow statement (JForStatement, JWhileStatement, JDoStatement), 
+	  the instance variables hasContinue, which is a boolean and helps with
+	  checking if there is a continue in a control-flow statement or not, and
+	  the continueLabel, which is a string and will be the variable that 
+	  contains the label for the continue statement. I made those variables
+	  public like I did with those from the break statement. After declaring 
+	  those instance variables, I continued by trying to place the 
+	  continueLabel in the right position in the codegen method of each of the
+	  control-flow statements, which led to some errors that I will describe in
+	  the issues section below. Before I placed the continueLabel, I checked if 
+	  the control-flow contains a continue in the first place. Once I placed 
+	  those labels, I continued with the implementation of the 
+	  JContinueStatement file. In this file, I added an instance variable of 
+	  type JStatement named enclosingStatement like I did for the break 
+	  statement. In the analyze method, I used peek() to get the value that is
+	  on top of the stack, like I did for the break statement. Then I 
+	  copy-pasted the rest of the analyze method, as well as the codegen method
+	  from the break statement, with some slight modifications. Where I saw 
+	  hasBreak, I changed it to hasContinue, and where I saw breakLabel, I 
+	  changed it with continueLabel. 
+
+      Issues and resolution: Since I had already implemented the break 
+	  statement, I did not encounter a lot of issues with this problem. The one
+	  and only problem I had was that when I run my code I was getting stuck in
+	  an infinite loop. I didn't know how to solve this issue, thus, I asked 
+	  the professor for help. He pointed out to me that the infinite loop was
+	  happening because I had placed my continueLabel in the wrong place in the
+	  codegen of each of the control-flow statements. He helped me find the 
+	  right spots, and we resolved my issue. Now my code for this problem runs
+	  without issues.
+
+   Problem 8 (Switch Statement)
+      Approach: This problem was the most painful of all of them. I took me the
+	  longest time to complete, and I bothered the professor quite a lot for it
+	  because I could not understand how I could possibly do both the analysis 
+	  and the codegen. In the end, I finally made it. In the analysis method, 
+	  firstly, I am analyzing the condition and I am making sure that it is an
+	  int. I continue, by iterating through the switch statement groups. I am
+	  creating a new LocalContext for each case, I am getting an expression for
+	  the case labels, and I am generating code for them. In case there are no
+	  labels in the switchLabels list, I have a flag with is set to true which
+	  is for future use in the codegen method. This flag will let me know if 
+	  there is a default label or not. For each group, I am also generating 
+	  code for the block. At the end of the analysis, I am creating an array
+	  that will hold integers, and more precisely, the literal ints of the case
+	  labels. Once I have, all the labels in the array, I am sorting the array
+	  and I am getting the lowest value saved in the lo variable, and the 
+	  highest value in the hi variable. Those two variables are important 
+	  because the code snippet the professor gave will not work without them. In
+	  the codegen method, I am firstly generating code for the condition. Then,
+	  I copy pasted the code snippet recommended by the professor, which will
+	  let me use the tableswitch, or the lookupswitch. With an if statement, I
+	  am able to work either on the tableswitch or the lookupswitch. For the
+	  tableswitch, I am creating a list that will contain all the labels. I 
+	  found this from the genTableSwitch file. Then, I am going through each
+	  switch statement group. I am getting all the labels for that statement
+	  group, I am creating a label for each one, and I am adding them in the
+	  array list. Once the case labels are done, I am creating the default
+	  label. In the case there is a break, I am creating its label. All this
+	  provides me with all the necessary information I need to call the 
+	  addTABLESWITCHInstruction. After this, for each switch statement group, I
+	  am adding the label for each case, unless we encounter a null in the 
+	  array list for the labels in which case I am adding a default label. I
+	  am generating code for the case block. In any case there is not a default
+	  label I am adding it, and finally, I am adding a break label, if there is
+	  a break. For the lookup switch case, I copy pasted my code from the table
+	  switch. The difference between the two is that the lookup switch is using
+	  a tree map rather than a table. In this case, I had to get the labels 
+	  from the switchLabels list, cast them to the JLiteralInt type, and then
+	  make them to integers, so I can be able to get the key part of the tree 
+	  map. Simultanuously, I was creating the label, which is the value of the
+	  key in the tree map. Generating code for each case block, adding the
+	  default labels, and the break labels is the same with the tableswitch 
+	  case.
+
+      Issues and resolution: As I already mentioned, this was the hardest 
+	  problem in this project. I had a very hard time undestanding the logic of
+	  how to implement both the analysis and the codegen of this. I asked the 
+	  professor multiple times for his help because I could not understand. He
+	  helped me a lot by recommending me things and giving me advice. One 
+	  advice was to create an array, for example, that will take the labels as
+	  integers rather than literal ints, and by sorting it I would be able to
+	  get the hi and lo values needed for his code snippet. He also recommended
+	  to use a flag that will show me if there is a default case or not, which
+	  would help in the codegen to identify if I need to add a default label
+	  when one was missing. One of the errors, I kept getting was the unable to
+	  resolve jump labels, which indicated that I was adding my labels to the
+	  wrong places. The professor helped me with this issue and we placed the
+	  addition of those labels to the right place. Another issue I encountered
+	  was NullPointerExceptions. Some of them were because I was not placing 
+	  my break labels at the right spot, in fact, I was creating the label and
+	  add it simultaneously, while I had to split those two procedures. Once I
+	  split them I didn't get anymore null pointer exceptions. The biggest 
+	  issue I have is the implemenation of the lookup switch case because I was
+	  not sure how to handle a tree map very well. This time the professor 
+	  recommended to get the labels from the switchLabels list, cast it to a
+	  JLiteralInt and then get the integer value, so I can access the treemap
+	  and get the right label value to add. All of these recommendations and 
+	  help made me succeed in the completion of this problem.
+
+   Problem 9 (Exception Handlers)
+      Approach: For most of its parts, this problem was very straight forward.
+	  I started my implementation by firstly, implementing the analyze and 
+	  codegen method of the JThrowStatament file. In the analysis part, I just
+	  analyzed the expression, and in the codegen method, I generated code for
+	  the throw, and at the end I called the ATHROW instruction, which I found
+	  in the appendix D. Then, I continued with the modification of the 
+	  JConstructorDeclaration and the JMethodDeclaration files. I included in
+	  the constructor a conversion of the list exceptions of type TypeName to
+	  a list of strings which contain the jvm names of those exceptions. In 
+	  both files, I added the newer list as an argument, whenever the method
+	  call addMethod was called. Before the value of the exceptions was null.
+	  Finally, I needed to implement both the analyze and the codegen methods
+	  in the JTryStatement file. This was the most challenging part of this 
+	  problem. In the analyze, method there were some confusing parts, for 
+	  which I will talk on the issues section below. However, for the 
+	  the implementation of it, I started by analyzing the try block. I 
+	  continued with creating a for loop in which I am looping through each one
+	  of the catch blocks. According to the professor, each catch takes as a
+	  parameter a single variable, so in the parameters arraylist each item
+	  corresponds to each catch block. Thus, I am looping through the 
+	  parameters arraylist. In the for loop, I create a new LocalContext with 
+	  context being the parent, I am saving the parameter in a variable, and I
+	  resolve and set the type of that variable to the new context. Then, I 
+	  copied some code from the JMethodDeclaration, as pointed out by the 
+	  professor, which will help to add the parameter saved in the variable to
+	  the new context. I continued with analyzing the catch block, and setting
+	  the analyzed catch block back to the arraylist with the catch blocks. 
+	  Lastly, I have an if statement for the optional finally, for which I am
+	  creating a new LocalContext, I am analyzing the finally block in the new
+	  context, and I am getting the offset I need for the code generation. In 
+	  the codegen method the instructions are very clear. At first, I saw that
+	  I need to create a bunch of labels, which is what I am doing at the 
+	  beginning of this method. Once I create the labels, startTry, endTry,
+	  endFinally, startFinally, endCatch, startFinallyPlusOne, I add the 
+	  startTry label, and I generate code for the try block. As you can observe
+	  I have not added the startCatch label at the beginning, because there
+	  should be a different catch label for every catch block we encounter. I 
+	  I generated code for the optional finally, and I added an uncoditional 
+	  jump to the endFinally label, which is followed by the endTry label. Like
+	  I did for the analysis part, I have a for loop which will iterate through
+	  the parameters array in order to be able to generate code for every catch 
+	  block. In the for loop, I am creating a startCatch label for each block, 
+	  and I add that label to an arraylist, but as well as I add the label in 
+	  the code generation. I saw that there need to be an arraylist of start 
+	  catch labels in the genExceptionHandler file. I continue with generating 
+	  code to store the catch variable, as well as generating code for the 
+	  catch block, which is followed by the endCatch label. Then, I am adding 
+	  an exception handler, as asked in the writeup with arguments the startTry
+	  label, the endTry label, the startCatch label, and the catchType, which
+	  is the type of the parameter. Of course, we can't forget about generating
+	  code for the optional finally, which is followed by an unconditional jump
+	  to the endFinally. Lastly, I was left dealing with the optional finally
+	  which has a bunch of description in the writeup. I followed closely that
+	  description. For the instructions that contain the offset as an argument,
+	  at first, I had given the numbers I found on the genExceptionHandlers 
+	  file but with the help of the professor, I including the right offset for
+	  it without having to hard-code it.
+
+      Issues and resolution: As I already mentioned in the approach section
+	  above, this problem had plenty of instructions. However, there was still
+	  some confusion about certain parts of it, for which I seeked helped from
+	  the professor. The first confusion was about how I could declare the 
+	  catch parameter in the new context. The professor recommended to follow
+	  the logic that is being used in the JMethodDeclaration file. In this file
+	  there is a sample of how you can use the formal parameters in a new 
+	  context. I followed his instruction and I made this part with some effort
+	  work. The next confusion was about the call to the first exception 
+	  handler. I didn't know what exactly to include in the catchType 
+	  parameter. In order to have my code working, I had hard coded that part,
+	  but the professor told me that I could call the type of the parameter 
+	  and get the string representation of it by calling the jvmName method.
+	  One more confusion was about the offset. Once again, I had hard-coded
+	  my offsets according to the genExceptionHandlers file, but the professor
+	  recommended to add an offset in the analysis, at the part where I deal 
+	  with the optional finally. This solved all of my problems for the 
+	  understanding and the implementation of the exception handlers. However,
+	  my code was still not the way I wanted. When I was giving a positive 
+	  number as input, an exception was thrown, and I realized that I had an
+	  issue with how I was implementing my comparison operators. I implemented
+	  int, long, and double type of the comparison operators the way the int
+	  type is implemented, but that apparently is wrong. After some thinking,
+	  I realized that I didn't need to use branch insturction fot the long
+	  type, and I for the double after using the DCMPL instruction, I could
+	  only use the IFLT, IFGE, IFGT, and IFLE instructions rather than 
+	  IF_ICMPLT, IF_ICMPGE, IF_ICMPGT, IF_ICMPLE. By fixing this, I was able to
+	  run the exception handlers with no issue. Also one more note, I had not
+	  realized the problem with the comparison operators until I arrived to 
+	  this problem.
+
+   Problem 10 (Interface Type Declaration)
+      Approach: This problem was not exceedingly hard since most of it was code
+	  that was copy-pasted from the JClassDeclaration file. I started my 
+	  implementation by modifying the Parser. I have added in the list with the
+	  modifiers the word "public" because I had added the word "abstract" in a 
+	  previous project. One more detail about this change is that I made this
+	  modification in the interfaceBody method rather than in the 
+	  interfaceMemberDecl method. The reason I did this is that I had added the
+	  "abastract" word in the interface body, and it worked, and I thought it
+	  would be the same for the "public" word. Also the interfaceMemberDecl
+	  method calls the interfaceBody() method anyway. The next step was to
+	  modify the contructor of the JInterfaceDeclaration file, in which we 
+	  were called to add to the modifiers list the words "abstract" and 
+	  "public", but this part of the code was already there. Then, I continued
+	  by implementing the codegen method in the JClassDeclaration file. In this
+	  method, I created a String array list that will contain the names of any
+	  potential superinterfaces. I used a for loop that iterates through the 
+	  superInterfaces arraylist, and I am adding the name of each one of them 
+	  in the new string arraylist. To do this, I am calling the jvmName method.
+	  Lastly, It was time for me to implement the rest of the 
+	  JInterfaceDeclaration file. In this files, I added code for the following
+	  methods: declareThisType, preAnalyze, thisType, analyze, and codegen. For
+	  For all of those methods, I copied the code from the JClassDeclaration 
+	  file, and I just did some slight modifications to fit for the case of the
+	  interfaces. For example, I did not need to include arraylist for an 
+	  instance field or constructor because the interfaces do not have neither
+	  an instance field nor a constructor. Technically, in the whole 
+	  JInterfaceDeclaration file, wherever I saw anything related to class, I
+	  just changed it to interface. When the method addClass was called the 
+	  superInterfaes argument is not null in this case, but it contains an
+	  arraylist with interfaces instead. 
+
+      Issues and resolution: This problem was one of the easiest ones, and that
+	  was quite surprising to me because for the previous projects it was one 
+	  of the hardest ones. It contained a lot of copy pasting of code from the
+	  JClassDeclaration file, with some small modifications to fit the case of
+	  the interfaces. When I completed my code, I tested it and it worked. 
+	  Thus, I didn't encounter any issues with the implementation of this 
+	  problem.
+
+5. List any other comments here. Feel free to provide any feedback on how
+   much you learned from doing the assignment, and whether you enjoyed
+   doing it.
+
+	I learned a lot about this homework, however, I felt that there were a lot
+	of implementation that was a little bit redundant. I also felt that this 
+	project in total needed signifiantly more work than other projects, I think
+	that it will be better for the future to maybe split the work equally to 
+	all of the projects rather than having a lot of it in one. I totally 
+	understand why this happened, but also it is a lot of weight towards the 
+	end of the semester when we are getting closer to final exams.
